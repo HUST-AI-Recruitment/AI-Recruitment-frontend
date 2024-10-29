@@ -29,16 +29,37 @@ import { AppBreadcrumb } from './index'
 import { AppHeaderDropdown } from './header/index'
 
 import PropTypes from 'prop-types'
+import checkTokenExpire from 'src/services/user'
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
-const AppHeader = (props) => {
-  const { loggedIn, setLoggedIn } = props
-  console.log('loggedIn', loggedIn)
+const AppHeader = () => {
   const headerRef = useRef()
+  const navigate = useNavigate()
   const { colorMode, setColorMode } = useColorModes('coreui-free-react-admin-template-theme')
-  const loginComponent = useRef()
 
   const dispatch = useDispatch()
   const sidebarShow = useSelector((state) => state.sidebarShow)
+
+  const token = useSelector((state) => state.authReducer.token)
+  const username = useSelector((state) => state.authReducer.username)
+  const id = useSelector((state) => state.authReducer.id)
+  const [loggedIn, setLoggedIn] = useState(false)
+
+  useEffect(() => {
+    if (checkTokenExpire()) {
+      localStorage.removeItem('token')
+      localStorage.removeItem('username')
+      localStorage.removeItem('role')
+      localStorage.removeItem('id')
+      localStorage.removeItem('expire')
+      setLoggedIn(false)
+    }
+  }, [])
+
+  useEffect(() => {
+    setLoggedIn(token ? true : false)
+  }, [token])
 
   useEffect(() => {
     document.addEventListener('scroll', () => {
@@ -46,6 +67,10 @@ const AppHeader = (props) => {
         headerRef.current.classList.toggle('shadow-sm', document.documentElement.scrollTop > 0)
     })
   }, [])
+
+  const handleProfileClick = () => {
+    navigate(`/profile/${id}`)
+  }
 
   return (
     <CHeader position="sticky" className="mb-4 p-0" ref={headerRef}>
@@ -138,11 +163,11 @@ const AppHeader = (props) => {
         <CHeaderNav>
           <CNavItem>
             {loggedIn ? (
-              <CNavLink href="#">{Username}</CNavLink>
+              <CNavLink onClick={handleProfileClick}>{username}</CNavLink>
             ) : (
               <>
                 <CNavLink to="/login" as={NavLink}>
-                  Login/Register
+                  Login
                 </CNavLink>
               </>
             )}

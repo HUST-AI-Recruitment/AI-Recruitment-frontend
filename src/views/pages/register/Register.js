@@ -33,7 +33,7 @@ const Register = () => {
   const baseUrl = 'https://api.recruitment.kkkstra.cn/api/v1/user'
   const countdown = 3000
 
-  const handleRegister = (event) => {
+  const handleRegister = async (event) => {
     event.preventDefault()
     if (!username || !email || !password || !repeatPassword || !role || !age || !degree) {
       setErrorMessages('Please fill in all fields')
@@ -50,7 +50,7 @@ const Register = () => {
       return
     }
     try {
-      const response = fetch(baseUrl, {
+      const response = await fetch(baseUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -62,6 +62,7 @@ const Register = () => {
           degree: degree,
         }),
       })
+      console.log(response)
       if (response.ok) {
         alert('Register success')
         navigate('/login')
@@ -72,6 +73,14 @@ const Register = () => {
       console.error(error)
     }
   }
+
+  console.log('username', username)
+  console.log('email', email)
+  console.log('password', password)
+  console.log('repeatPassword', repeatPassword)
+  console.log('role', role)
+  console.log('age', age)
+  console.log('degree', degree)
 
   useEffect(() => {
     if (errorMessages) setVisible(true)
@@ -119,8 +128,8 @@ const Register = () => {
                       value="1"
                       label="我是招聘方"
                       style={{ flex: 1 }}
-                      checked={role === '1'}
-                      onChange={(e) => setRole(e.target.value)}
+                      checked={role === 1}
+                      onChange={(e) => setRole(parseInt(e.target.value))}
                     />
                     <CFormCheck
                       inline
@@ -129,8 +138,8 @@ const Register = () => {
                       value="2"
                       label="我是求职者"
                       style={{ flex: 1 }}
-                      checked={role === '2'}
-                      onChange={(e) => setRole(e.target.value)}
+                      checked={role === 2}
+                      onChange={(e) => setRole(parseInt(e.target.value))}
                     />
                   </div>
                   <CInputGroup className="mb-3">
@@ -153,7 +162,7 @@ const Register = () => {
                     <CInputGroupText>
                       <CIcon icon={cilEducation} />
                     </CInputGroupText>
-                    <CFormSelect onChange={(e) => setDegree(e.target.value)}>
+                    <CFormSelect onChange={(e) => setDegree(parseInt(e.target.value))}>
                       <option value="">Degree</option>
                       <option value="1">Bachelor</option>
                       <option value="2">Master</option>
@@ -162,7 +171,7 @@ const Register = () => {
                   </CInputGroup>
                   <CInputGroup className="mb-3">
                     <CInputGroupText>@</CInputGroupText>
-                    <CFormInput placeholder="Email" />
+                    <CFormInput placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
                   </CInputGroup>
                   <CInputGroup className="mb-3">
                     <CInputGroupText>

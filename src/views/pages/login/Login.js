@@ -20,6 +20,8 @@ import { cilLockLocked, cilUser } from '@coreui/icons'
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import checkTokenExpire from 'src/services/user'
+import { useDispatch } from 'react-redux'
+import { setAuthData } from 'src/reducers/authReducer'
 
 const Login = () => {
   const navigate = useNavigate()
@@ -29,6 +31,7 @@ const Login = () => {
   const [role, setRole] = useState(1)
   const baseUrl = 'https://api.recruitment.kkkstra.cn/api/v1/session'
   const countdown = 3000
+  const dispatch = useDispatch()
 
   const handleLogin = async (event) => {
     event.preventDefault()
@@ -51,8 +54,15 @@ const Login = () => {
       })
       const data = await response.json()
       if (response.ok) {
-        localStorage.setItem('loggedUser', JSON.stringify(data['data']))
-
+        let auth = data['data']
+        auth['role'] = role
+        auth['username'] = username
+        localStorage.setItem('token', auth['token'])
+        localStorage.setItem('expire', auth['expire'] * 1000 + Date.now())
+        localStorage.setItem('id', auth['id'])
+        localStorage.setItem('username', auth['username'])
+        localStorage.setItem('role', auth['role'])
+        dispatch(setAuthData(auth))
         navigate('/home')
       } else {
         console.error(data.message)
@@ -67,10 +77,14 @@ const Login = () => {
 
   useEffect(() => {
     const loggedUserJSON = localStorage.getItem('loggedUser')
-    if (loggedUserJSON && !checkTokenExpire()) {
-      navigate('/home')
+    if (loggedUserJSON) {
+      if (!checkTokenExpire()) navigate('/home')
+      else {
+        localStorage.removeItem('loggedUser')
+        dispatch({ type: 'REMOVE_TOKEN' })
+      }
     }
-  }, [])
+  }, [navigate, dispatch])
   const [visible, setVisible] = useState(false)
 
   useEffect(() => {
