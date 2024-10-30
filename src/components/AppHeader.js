@@ -28,10 +28,10 @@ import {
 import { AppBreadcrumb } from './index'
 import { AppHeaderDropdown } from './header/index'
 
-import PropTypes from 'prop-types'
 import checkTokenExpire from 'src/services/user'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { clearAuthData } from 'src/reducers/authReducer'
 
 const AppHeader = () => {
   const headerRef = useRef()
@@ -39,11 +39,12 @@ const AppHeader = () => {
   const { colorMode, setColorMode } = useColorModes('coreui-free-react-admin-template-theme')
 
   const dispatch = useDispatch()
-  const sidebarShow = useSelector((state) => state.sidebarShow)
+  // const sidebarShow = useSelector((state) => state.changeState.sidebarShow)
+  const sidebarUnfoldable = useSelector((state) => state.changeState.sidebarUnfoldable)
 
   const token = useSelector((state) => state.authReducer.token)
   const username = useSelector((state) => state.authReducer.username)
-  const id = useSelector((state) => state.authReducer.id)
+  const userid = useSelector((state) => state.authReducer.userid)
   const [loggedIn, setLoggedIn] = useState(false)
 
   useEffect(() => {
@@ -51,8 +52,9 @@ const AppHeader = () => {
       localStorage.removeItem('token')
       localStorage.removeItem('username')
       localStorage.removeItem('role')
-      localStorage.removeItem('id')
+      localStorage.removeItem('userid')
       localStorage.removeItem('expire')
+      dispatch(clearAuthData())
       setLoggedIn(false)
     }
   }, [])
@@ -69,18 +71,20 @@ const AppHeader = () => {
   }, [])
 
   const handleProfileClick = () => {
-    navigate(`/profile/${id}`)
+    navigate(`/user/${userid}`)
   }
 
   return (
     <CHeader position="sticky" className="mb-4 p-0" ref={headerRef}>
       <CContainer className="border-bottom px-4" fluid>
-        {/* <CHeaderToggler
-          onClick={() => dispatch({ type: 'set', sidebarShow: !sidebarShow })}
+        <CHeaderToggler
+          onClick={() =>
+            dispatch({ type: 'setSidebarUnfoldable', sidebarUnfoldable: !sidebarUnfoldable })
+          }
           style={{ marginInlineStart: '-14px' }}
         >
           <CIcon icon={cilMenu} size="lg" />
-        </CHeaderToggler> */}
+        </CHeaderToggler>
         <CHeaderNav className="d-none d-md-flex">
           <CNavItem>
             <CNavLink to="/dashboard" as={NavLink}>
@@ -111,7 +115,7 @@ const AppHeader = () => {
             </CNavLink>
           </CNavItem>
         </CHeaderNav>
-        {/* <CHeaderNav>
+        <CHeaderNav>
           <li className="nav-item py-1">
             <div className="vr h-100 mx-2 text-body text-opacity-75"></div>
           </li>
@@ -158,32 +162,25 @@ const AppHeader = () => {
           <li className="nav-item py-1">
             <div className="vr h-100 mx-2 text-body text-opacity-75"></div>
           </li>
-          <AppHeaderDropdown />
-        </CHeaderNav> */}
+          {/* <AppHeaderDropdown /> */}
+        </CHeaderNav>
         <CHeaderNav>
           <CNavItem>
             {loggedIn ? (
               <CNavLink onClick={handleProfileClick}>{username}</CNavLink>
             ) : (
-              <>
-                <CNavLink to="/login" as={NavLink}>
-                  Login
-                </CNavLink>
-              </>
+              <CNavLink to="/login" as={NavLink}>
+                Login
+              </CNavLink>
             )}
           </CNavItem>
         </CHeaderNav>
       </CContainer>
-      <CContainer className="px-4" fluid>
+      {/* <CContainer className="px-4" fluid>
         <AppBreadcrumb />
-      </CContainer>
+      </CContainer> */}
     </CHeader>
   )
-}
-
-AppHeader.propTypes = {
-  loggedIn: PropTypes.bool.isRequired,
-  setLoggedIn: PropTypes.func.isRequired,
 }
 
 export default AppHeader

@@ -65,7 +65,7 @@ const Login = () => {
         localStorage.setItem('username', auth['username'])
         localStorage.setItem('role', auth['role'])
         dispatch(setAuthData(auth))
-        navigate('/home')
+        navigate(`/user/${auth['userid']}`)
       } else {
         console.error(data.message)
       }
@@ -149,8 +149,8 @@ const Login = () => {
                         value="1"
                         label="我是招聘方"
                         style={{ flex: 1 }}
-                        checked={role === '1'}
-                        onChange={(e) => setRole(e.target.value)}
+                        checked={role === 1}
+                        onChange={(e) => setRole(parseInt(e.target.value))}
                       />
                       <CFormCheck
                         inline
@@ -159,8 +159,8 @@ const Login = () => {
                         value="2"
                         label="我是求职者"
                         style={{ flex: 1 }}
-                        checked={role === '2'}
-                        onChange={(e) => setRole(e.target.value)}
+                        checked={role === 2}
+                        onChange={(e) => setRole(parseInt(e.target.value))}
                       />
                     </div>
                     <CRow>

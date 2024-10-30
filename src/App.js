@@ -8,6 +8,7 @@ import './scss/style.scss'
 // Containers
 const DefaultLayout = React.lazy(() => import('./layout/DefaultLayout'))
 const Home = React.lazy(() => import('./layout/HomeLayout'))
+const UserLayout = React.lazy(() => import('./layout/UserLayout'))
 // Pages
 const Login = React.lazy(() => import('./views/pages/login/Login'))
 const Register = React.lazy(() => import('./views/pages/register/Register'))
@@ -47,7 +48,7 @@ const App = () => {
           <Route exact path="/404" name="Page 404" element={<Page404 />} />
           <Route exact path="/500" name="Page 500" element={<Page500 />} />
           <Route exact path="/home" name="Home Page" element={<Home />} />
-          <Route exact path="/profile/:id" element={<Home />} />
+          <Route exact path="/user/:id" element={<UserLayout />} />
           <Route path="*" name="Home" element={<DefaultLayout />} />
         </Routes>
       </Suspense>

@@ -11,18 +11,20 @@ import {
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 
-import { AppSidebarNav } from './AppSidebarNav'
+import { AppSidebarNav } from 'src/components/AppSidebarNav'
 
 import { logo } from 'src/assets/brand/logo'
 import { sygnet } from 'src/assets/brand/sygnet'
 
 // sidebar nav config
-import navigation from '../_nav'
+import { recruiterNavigation } from 'src/nav'
 
-const AppSidebar = () => {
+const RecruiterSidebar = () => {
   const dispatch = useDispatch()
   const unfoldable = useSelector((state) => state.changeState.sidebarUnfoldable)
   const sidebarShow = useSelector((state) => state.changeState.sidebarShow)
+
+  console.log('recruiterSidebar')
 
   return (
     <CSidebar
@@ -46,7 +48,7 @@ const AppSidebar = () => {
           onClick={() => dispatch({ type: 'setSidebarShow', sidebarShow: false })}
         /> */}
       </CSidebarHeader>
-      <AppSidebarNav items={navigation} />
+      <AppSidebarNav items={recruiterNavigation} />
       {/* <CSidebarFooter className="border-top d-none d-lg-flex">
         <CSidebarToggler
           onClick={() => dispatch({ type: 'setSidebarUnfoldable', sidebarUnfoldable: !unfoldable })}
@@ -56,4 +58,4 @@ const AppSidebar = () => {
   )
 }
 
-export default React.memo(AppSidebar)
+export default React.memo(RecruiterSidebar)
