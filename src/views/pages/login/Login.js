@@ -57,9 +57,11 @@ const Login = () => {
         let auth = data['data']
         auth['role'] = role
         auth['username'] = username
+        auth['userid'] = auth['id']
+        auth['expire'] = auth['expire'] * 1000 + Date.now()
         localStorage.setItem('token', auth['token'])
-        localStorage.setItem('expire', auth['expire'] * 1000 + Date.now())
-        localStorage.setItem('id', auth['id'])
+        localStorage.setItem('expire', auth['expire'])
+        localStorage.setItem('userid', auth['userid'])
         localStorage.setItem('username', auth['username'])
         localStorage.setItem('role', auth['role'])
         dispatch(setAuthData(auth))
