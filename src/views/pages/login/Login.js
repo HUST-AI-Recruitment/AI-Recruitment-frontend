@@ -93,7 +93,7 @@ const Login = () => {
         dispatch(clearAuthData())
       }
     }
-  }, [navigate, dispatch])
+  }, [userid, dispatch, navigate])
   const [visible, setVisible] = useState(false)
 
   useEffect(() => {

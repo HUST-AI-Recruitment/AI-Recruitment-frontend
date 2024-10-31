@@ -43,6 +43,8 @@ const RecruiterSidebar = () => {
     dispatch(clearAuthData())
   }
 
+  const userid = useSelector((state) => state.authReducer.userid)
+
   return (
     <CSidebar
       className="border-end"
@@ -65,7 +67,7 @@ const RecruiterSidebar = () => {
           onClick={() => dispatch({ type: 'setSidebarShow', sidebarShow: false })}
         />
       </CSidebarHeader>
-      <AppSidebarNav items={recruiterNavigation} />
+      <AppSidebarNav items={recruiterNavigation(userid)} />
       <CSidebarFooter className="border-top d-none d-lg-flex">
         <CSidebarNav as={SimpleBar}>
           <CNavItem as="div" className="d-flex align-items-center">
