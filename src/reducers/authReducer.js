@@ -3,9 +3,9 @@ import { createSlice } from '@reduxjs/toolkit'
 const initialState = {
   token: localStorage.getItem('token') || null,
   username: localStorage.getItem('username') || null,
-  role: localStorage.getItem('role') || null,
-  userid: localStorage.getItem('userid') || null,
-  expire: localStorage.getItem('expire') || null,
+  role: parseInt(localStorage.getItem('role')) || null,
+  userid: parseInt(localStorage.getItem('userid')) || null,
+  expire: parseInt(localStorage.getItem('expire')) || null,
 }
 
 const authSlice = createSlice({

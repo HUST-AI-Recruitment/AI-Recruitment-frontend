@@ -1,5 +1,5 @@
 const checkTokenExpire = () => {
-  const expire = localStorage.getItem('expire') || null
+  const expire = parseInt(localStorage.getItem('expire')) || null
   if (expire !== null && Date.now() > expire) {
     alert('Token expired')
     return true

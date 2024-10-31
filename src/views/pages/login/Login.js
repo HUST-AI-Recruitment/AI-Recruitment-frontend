@@ -20,8 +20,8 @@ import { cilLockLocked, cilUser } from '@coreui/icons'
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import checkTokenExpire from 'src/services/user'
-import { useDispatch } from 'react-redux'
-import { setAuthData } from 'src/reducers/authReducer'
+import { useDispatch, useSelector } from 'react-redux'
+import { setAuthData, clearAuthData } from 'src/reducers/authReducer'
 
 const Login = () => {
   const navigate = useNavigate()
@@ -32,6 +32,7 @@ const Login = () => {
   const baseUrl = 'https://api.recruitment.kkkstra.cn/api/v1/session'
   const countdown = 3000
   const dispatch = useDispatch()
+  const userid = useSelector((state) => state.authReducer.userid)
 
   const handleLogin = async (event) => {
     event.preventDefault()
@@ -55,6 +56,7 @@ const Login = () => {
       const data = await response.json()
       if (response.ok) {
         let auth = data['data']
+        console.log('auth:', auth)
         auth['role'] = role
         auth['username'] = username
         auth['userid'] = auth['id']
@@ -78,12 +80,17 @@ const Login = () => {
   }
 
   useEffect(() => {
-    const loggedUserJSON = localStorage.getItem('loggedUser')
-    if (loggedUserJSON) {
-      if (!checkTokenExpire()) navigate('/home')
+    const token = localStorage.getItem('token')
+    const expire = localStorage.getItem('expire')
+    if (token && expire) {
+      if (!checkTokenExpire()) navigate(`/user/${userid}`)
       else {
-        localStorage.removeItem('loggedUser')
-        dispatch({ type: 'REMOVE_TOKEN' })
+        localStorage.removeItem('token')
+        localStorage.removeItem('expire')
+        localStorage.removeItem('userid')
+        localStorage.removeItem('username')
+        localStorage.removeItem('role')
+        dispatch(clearAuthData())
       }
     }
   }, [navigate, dispatch])
@@ -169,7 +176,7 @@ const Login = () => {
                           Login
                         </CButton>
                       </CCol>
-                      <CCol xs={6} className="text-right">
+                      <CCol xs={6} className="text-right d-none">
                         <CButton color="link" className="px-0">
                           Forgot password?
                         </CButton>

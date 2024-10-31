@@ -9,7 +9,7 @@ const RecruiterLayout = () => {
       <RecruiterSidebar />
       <div className="wrapper d-flex flex-column min-vh-100">
         <AppHeader />
-        <div className="body flex-grow-1">{/* <AppContent /> */}</div>
+        {/* <div className="body flex-grow-1"><AppContent /></div> */}
       </div>
     </div>
   )
