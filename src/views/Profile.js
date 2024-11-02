@@ -7,6 +7,7 @@ import {
   CFormSelect,
   CFormTextarea,
   CCol,
+  CCardTitle,
 } from '@coreui/react'
 import { useSelector, useDispatch } from 'react-redux'
 import { setUsername } from 'src/reducers/authReducer'
@@ -48,7 +49,7 @@ const Profile = () => {
       setDegree(profile.degree)
     }
     fetchData()
-  }, [getUrl])
+  }, [getUrl, token])
 
   const handleSubmit = async (event) => {
     const form = event.currentTarget

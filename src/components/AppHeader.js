@@ -57,7 +57,7 @@ const AppHeader = () => {
       dispatch(clearAuthData())
       setLoggedIn(false)
     }
-  }, [])
+  }, [dispatch])
 
   useEffect(() => {
     setLoggedIn(token ? true : false)
