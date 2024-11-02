@@ -23,16 +23,17 @@ import { CSidebarNav, CNavItem } from '@coreui/react'
 import SimpleBar from 'simplebar-react'
 
 // sidebar nav config
-import { recruiterNavigation } from 'src/nav'
+import { recruiterNavigation, candidateNavigation } from 'src/nav'
 
 import { clearAuthData } from 'src/reducers/authReducer'
 
-const RecruiterSidebar = () => {
+const MyAppSidebar = () => {
   const dispatch = useDispatch()
   const unfoldable = useSelector((state) => state.changeState.sidebarUnfoldable)
   const sidebarShow = useSelector((state) => state.changeState.sidebarShow)
+  const role = useSelector((state) => state.authReducer.role)
 
-  console.log('recruiterSidebar')
+  console.log('MyAppSidebar role: ', role)
 
   const handleLogout = () => {
     localStorage.removeItem('token')
@@ -41,6 +42,7 @@ const RecruiterSidebar = () => {
     localStorage.removeItem('userid')
     localStorage.removeItem('expire')
     dispatch(clearAuthData())
+    // TODO: Redirect to Home/Login page
   }
 
   const userid = useSelector((state) => state.authReducer.userid)
@@ -67,7 +69,9 @@ const RecruiterSidebar = () => {
           onClick={() => dispatch({ type: 'setSidebarShow', sidebarShow: false })}
         />
       </CSidebarHeader>
-      <AppSidebarNav items={recruiterNavigation(userid)} />
+      <AppSidebarNav
+        items={role === 1 ? recruiterNavigation(userid) : candidateNavigation(userid)}
+      />
       <CSidebarFooter className="border-top d-none d-lg-flex" style={{ margin: '-8px' }}>
         <CSidebarNav as={SimpleBar}>
           <CNavItem as="div" className="d-flex align-items-center">
@@ -80,4 +84,4 @@ const RecruiterSidebar = () => {
   )
 }
 
-export default React.memo(RecruiterSidebar)
+export default React.memo(MyAppSidebar)

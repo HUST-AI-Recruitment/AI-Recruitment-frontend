@@ -24,4 +24,13 @@ const recruiterNavigation = (userid) => [
   },
 ]
 
-export { recruiterNavigation }
+const candidateNavigation = (userid) => [
+  {
+    component: CNavItem,
+    name: 'Profile',
+    to: `/user/${userid}`,
+    icon: <CIcon icon={cilUser} customClassName="nav-icon" />,
+  },
+]
+
+export { recruiterNavigation, candidateNavigation }

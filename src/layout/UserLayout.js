@@ -1,14 +1,21 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
-import RecruiterLayout from './RecruiterLayout'
-import DefaultLayout from './DefaultLayout'
+import { AppHeader } from '../components/index'
+import MyAppSidebar from 'src/components/MyAppSidebar'
+import MyAppContent from 'src/components/MyAppContent'
 
 const UserLayout = () => {
-  const role = useSelector((state) => state.authReducer.role)
   console.log('UserLayout')
-  console.log('role', role)
-
-  return <div>{role === 1 ? <RecruiterLayout /> : <DefaultLayout />}</div>
+  return (
+    <div>
+      <MyAppSidebar />
+      <div className="wrapper d-flex flex-column min-vh-100">
+        <AppHeader />
+        <div className="body flex-grow-1">
+          <MyAppContent />
+        </div>
+      </div>
+    </div>
+  )
 }
 
 export default UserLayout

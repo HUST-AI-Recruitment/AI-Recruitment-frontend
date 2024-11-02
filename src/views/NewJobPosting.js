@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { CButton, CCol, CForm, CFormSelect, CFormInput } from '@coreui/react'
+import { CButton, CCol, CForm, CFormInput, CFormTextarea } from '@coreui/react'
 
 const NewJobPosting = () => {
   const navigate = useNavigate()
@@ -52,7 +52,6 @@ const NewJobPosting = () => {
         job_type: job_type,
       }),
     })
-    const result = await response.json()
     if (response.ok) {
       alert('Job posting created successfully')
       setTitle('')
@@ -70,66 +69,68 @@ const NewJobPosting = () => {
   return (
     <>
       <CForm className="row g-3" noValidate validated={validated} onSubmit={handleSubmit}>
-        <CCol md={4} className="mb-3">
+        <CCol md={6} className="mb-3">
           <CFormInput
             type="text"
-            label="Title"
+            floatingLabel="Title"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             required
           />
         </CCol>
-        <CCol md={4} className="mb-3">
+        <CCol md={6} className="mb-3">
           <CFormInput
             type="text"
-            label="Description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
+            floatingLabel="Job Type"
+            value={job_type}
+            onChange={(e) => setJobType(e.target.value)}
             required
           />
         </CCol>
-        <CCol md={4} className="mb-3">
+        <CCol md={6} className="mb-3">
           <CFormInput
             type="text"
-            label="Demand"
-            value={demand}
-            onChange={(e) => setDemand(e.target.value)}
-            required
-          />
-        </CCol>
-        <CCol md={4} className="mb-3">
-          <CFormInput
-            type="text"
-            label="Location"
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
-            required
-          />
-        </CCol>
-        <CCol md={4} className="mb-3">
-          <CFormInput
-            type="text"
-            label="Company"
-            value={company}
-            onChange={(e) => setCompany(e.target.value)}
-            required
-          />
-        </CCol>
-        <CCol md={4} className="mb-3">
-          <CFormInput
-            type="text"
-            label="Salary"
+            floatingLabel="Salary"
             value={salary}
             onChange={(e) => setSalary(e.target.value)}
             required
           />
         </CCol>
-        <CCol md={4} className="mb-3">
+        <CCol md={6} className="mb-3">
           <CFormInput
             type="text"
-            label="Job Type"
-            value={job_type}
-            onChange={(e) => setJobType(e.target.value)}
+            floatingLabel="Company"
+            value={company}
+            onChange={(e) => setCompany(e.target.value)}
+            required
+          />
+        </CCol>
+        <CCol md={6} className="mb-3">
+          <CFormInput
+            type="text"
+            floatingLabel="Location"
+            value={location}
+            onChange={(e) => setLocation(e.target.value)}
+            required
+          />
+        </CCol>
+        <CCol md={12} className="mb-3">
+          <CFormTextarea
+            type="text"
+            floatingLabel="Description"
+            style={{ height: '6em' }}
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            required
+          />
+        </CCol>
+        <CCol md={12} className="mb-3">
+          <CFormTextarea
+            type="text"
+            floatingLabel="Demand"
+            style={{ height: '8em' }}
+            value={demand}
+            onChange={(e) => setDemand(e.target.value)}
             required
           />
         </CCol>
