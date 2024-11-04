@@ -13,7 +13,6 @@ import {
   CInputGroup,
   CInputGroupText,
   CRow,
-  CFormCheck,
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import { cilLockLocked, cilUser } from '@coreui/icons'
@@ -28,7 +27,6 @@ const Login = () => {
   const [errorMessages, setErrorMessages] = useState(null)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const [role, setRole] = useState(1)
   const baseUrl = 'https://api.recruitment.kkkstra.cn/api/v1/session'
   const countdown = 3000
   const dispatch = useDispatch()
@@ -36,7 +34,7 @@ const Login = () => {
 
   const handleLogin = async (event) => {
     event.preventDefault()
-    if (!username || !password || !role) {
+    if (!username || !password) {
       setErrorMessages('Please fill in all fields')
       setTimeout(() => {
         setErrorMessages(null)
@@ -50,14 +48,12 @@ const Login = () => {
         body: JSON.stringify({
           username: username,
           password: password,
-          role: role,
         }),
       })
       const data = await response.json()
       if (response.ok) {
         let auth = data['data']
         console.log('auth:', auth)
-        auth['role'] = role
         auth['username'] = username
         auth['userid'] = auth['id']
         auth['expire'] = auth['expire'] * 1000 + Date.now()
@@ -103,7 +99,6 @@ const Login = () => {
 
   console.log('username:', username)
   console.log('password:', password)
-  console.log('role:', role)
 
   return (
     <div className="bg-body-tertiary min-vh-100 d-flex flex-row align-items-center">
@@ -140,36 +135,6 @@ const Login = () => {
                         onChange={(e) => setPassword(e.target.value)}
                       />
                     </CInputGroup>
-
-                    <div
-                      style={{
-                        display: 'flex',
-                        flexDirection: 'row',
-                        justifyContent: 'space-evenly',
-                        paddingBottom: '16px',
-                      }}
-                    >
-                      <CFormCheck
-                        inline
-                        type="radio"
-                        name="role"
-                        value="1"
-                        label="我是招聘方"
-                        style={{ flex: 1 }}
-                        checked={role === 1}
-                        onChange={(e) => setRole(parseInt(e.target.value))}
-                      />
-                      <CFormCheck
-                        inline
-                        type="radio"
-                        name="role"
-                        value="2"
-                        label="我是求职者"
-                        style={{ flex: 1 }}
-                        checked={role === 2}
-                        onChange={(e) => setRole(parseInt(e.target.value))}
-                      />
-                    </div>
                     <CRow>
                       <CCol xs={6}>
                         <CButton color="primary" className="px-4" onClick={handleLogin}>

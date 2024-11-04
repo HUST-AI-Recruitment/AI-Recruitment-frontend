@@ -31,6 +31,18 @@ const candidateNavigation = (userid) => [
     to: `/user/${userid}`,
     icon: <CIcon icon={cilUser} customClassName="nav-icon" />,
   },
+  {
+    component: CNavItem,
+    name: 'All Jobs',
+    to: '/all-jobs',
+    icon: <CIcon icon={cilObjectGroup} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
+    name: 'Resume',
+    to: '/resume',
+    icon: <CIcon icon={cilNoteAdd} customClassName="nav-icon" />,
+  },
 ]
 
 export { recruiterNavigation, candidateNavigation }

@@ -72,7 +72,7 @@ const MyAppSidebar = () => {
       <AppSidebarNav
         items={role === 1 ? recruiterNavigation(userid) : candidateNavigation(userid)}
       />
-      <CSidebarFooter className="border-top d-none d-lg-flex" style={{ margin: '-8px' }}>
+      <CSidebarFooter className="border-top d-none d-lg-flex" style={{ marginLeft: '-8px' }}>
         <CSidebarNav as={SimpleBar}>
           <CNavItem as="div" className="d-flex align-items-center">
             <CIcon icon={cilAccountLogout} customClassName="nav-icon" />

@@ -10,6 +10,7 @@ on:
 env:
   FORCE_COLOR: 2
   NODE: 16
+  CI: false
 
 jobs:
   build:

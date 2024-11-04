@@ -65,7 +65,9 @@ const JobDetail = () => {
         </CCardText>
         <CCardText>
           <strong>职位描述：</strong>
-          <div>{job.description}</div>
+          {job.description.split('\n').map((line, index) => (
+            <div key={index}>{line}</div>
+          ))}
         </CCardText>
         <CCardText>
           <strong>职位要求：</strong>

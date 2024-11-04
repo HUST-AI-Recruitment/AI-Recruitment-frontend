@@ -133,9 +133,11 @@ const Profile = () => {
               setDegree(parseInt(e.target.value))
               e.target.blur()
             }}
+            valid={validated && degree !== 0}
+            invalid={validated && degree === 0}
             required
           >
-            <option value="">Select a degree</option>
+            <option value={0}>Select a degree</option>
             <option value={1}>Bachelor</option>
             <option value={2}>Master</option>
             <option value={3}>PhD</option>
