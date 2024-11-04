@@ -25,18 +25,22 @@ const Register = () => {
   const [email, setEmail] = React.useState('')
   const [password, setPassword] = React.useState('')
   const [repeatPassword, setRepeatPassword] = React.useState('')
-  const [role, setRole] = React.useState(1)
+  const [role, setRole] = React.useState(0)
   const [age, setAge] = React.useState(0)
   const [degree, setDegree] = React.useState('')
   const [errorMessages, setErrorMessages] = useState(null)
   const [visible, setVisible] = useState(false)
   const baseUrl = 'https://api.recruitment.kkkstra.cn/api/v1/user'
   const countdown = 3000
+  const [validated, setValidated] = React.useState(false)
 
   const handleRegister = async (event) => {
     event.preventDefault()
-    if (!username || !email || !password || !repeatPassword || !role || !age || !degree) {
+    const form = event.currentTarget
+    if (form.checkValidity() === false) {
+      event.stopPropagation()
       setErrorMessages('Please fill in all fields')
+      setValidated(true)
       setTimeout(() => {
         setErrorMessages(null)
       }, countdown)
@@ -110,7 +114,7 @@ const Register = () => {
           <CCol md={9} lg={7} xl={6}>
             <CCard className="mx-4">
               <CCardBody className="p-4">
-                <CForm>
+                <CForm onSubmit={handleRegister} noValidate validated={validated}>
                   <h1>Register</h1>
                   <p className="text-body-secondary">Create your account</p>
                   <div
@@ -130,6 +134,7 @@ const Register = () => {
                       style={{ flex: 1 }}
                       checked={role === 1}
                       onChange={(e) => setRole(parseInt(e.target.value))}
+                      required
                     />
                     <CFormCheck
                       inline
@@ -140,6 +145,7 @@ const Register = () => {
                       style={{ flex: 1 }}
                       checked={role === 2}
                       onChange={(e) => setRole(parseInt(e.target.value))}
+                      required
                     />
                   </div>
                   <CInputGroup className="mb-3">
@@ -150,19 +156,29 @@ const Register = () => {
                       placeholder="Username"
                       autoComplete="username"
                       onChange={(e) => setUsername(e.target.value)}
+                      required
                     />
                   </CInputGroup>
                   <CInputGroup className="mb-3">
                     <CInputGroupText>
                       <CIcon icon={cilUser} />
                     </CInputGroupText>
-                    <CFormInput placeholder="Age" onChange={handleAgeChange} />
+                    <CFormInput
+                      placeholder="Age"
+                      onChange={handleAgeChange}
+                      inputMode="numeric"
+                      type="number"
+                      required
+                    />
                   </CInputGroup>
                   <CInputGroup className="mb-3">
                     <CInputGroupText>
                       <CIcon icon={cilEducation} />
                     </CInputGroupText>
-                    <CFormSelect onChange={(e) => setDegree(parseInt(e.target.value))}>
+                    <CFormSelect
+                      onChange={(e) => setDegree(e.target.value ? parseInt(e.target.value) : 0)}
+                      required
+                    >
                       <option value="">Degree</option>
                       <option value="1">Bachelor</option>
                       <option value="2">Master</option>
@@ -171,7 +187,12 @@ const Register = () => {
                   </CInputGroup>
                   <CInputGroup className="mb-3">
                     <CInputGroupText>@</CInputGroupText>
-                    <CFormInput placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
+                    <CFormInput
+                      placeholder="Email"
+                      onChange={(e) => setEmail(e.target.value)}
+                      required
+                      type="email"
+                    />
                   </CInputGroup>
                   <CInputGroup className="mb-3">
                     <CInputGroupText>
@@ -182,6 +203,7 @@ const Register = () => {
                       placeholder="Password"
                       autoComplete="new-password"
                       onChange={(e) => setPassword(e.target.value)}
+                      required
                     />
                   </CInputGroup>
                   <CInputGroup className="mb-4">
@@ -193,10 +215,11 @@ const Register = () => {
                       placeholder="Repeat password"
                       autoComplete="new-password"
                       onChange={(e) => setRepeatPassword(e.target.value)}
+                      required
                     />
                   </CInputGroup>
                   <div className="d-grid">
-                    <CButton color="success" onClick={handleRegister}>
+                    <CButton color="success" type="submit">
                       Create Account
                     </CButton>
                   </div>

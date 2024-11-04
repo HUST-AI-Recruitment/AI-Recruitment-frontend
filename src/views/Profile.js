@@ -11,7 +11,6 @@ import {
 } from '@coreui/react'
 import { useSelector, useDispatch } from 'react-redux'
 import { setUsername } from 'src/reducers/authReducer'
-import { string } from 'prop-types'
 
 const Profile = () => {
   console.log('Profile')
@@ -25,7 +24,7 @@ const Profile = () => {
   const putUrl = 'https://api.recruitment.kkkstra.cn/api/v1/user/me'
   const deleteUrl = 'https://api.recruitment.kkkstra.cn/api/v1/user/me'
 
-  const [username, setUsername] = React.useState('')
+  const [name, setName] = React.useState('')
   const [email, setEmail] = React.useState('')
   const [oldPassword, setOldPassword] = React.useState('')
   const [newPassword, setNewPassword] = React.useState('')
@@ -43,13 +42,15 @@ const Profile = () => {
       })
       const data = await response.json()
       const profile = data['data']['profile']
-      setUsername(profile.username)
+      setName(profile.username)
+      dispatch(setUsername(profile.username))
+      localStorage.setItem('username', profile.username)
       setEmail(profile.email)
       setAge(profile.age)
       setDegree(profile.degree)
     }
     fetchData()
-  }, [getUrl, token])
+  }, [getUrl, token, dispatch])
 
   const handleSubmit = async (event) => {
     const form = event.currentTarget
@@ -67,7 +68,7 @@ const Profile = () => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        username: username,
+        username: name,
         email: email,
         age: age,
         degree: degree,
@@ -101,14 +102,14 @@ const Profile = () => {
           <CFormInput
             type="text"
             label="Username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
             required
           />
         </CCol>
         <CCol md={6} className="mb-3">
           <CFormInput
-            type="text"
+            type="email"
             label="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -117,7 +118,8 @@ const Profile = () => {
         </CCol>
         <CCol md={6} className="mb-3">
           <CFormInput
-            type="text"
+            type="number"
+            inputMode="numeric"
             label="Age"
             value={age}
             onChange={(e) => setAge(parseInt(e.target.value))}
@@ -130,14 +132,12 @@ const Profile = () => {
             label="Degree"
             value={degree}
             onChange={(e) => {
-              setDegree(parseInt(e.target.value))
+              setDegree(e.target.value ? parseInt(e.target.value) : 0)
               e.target.blur()
             }}
-            valid={validated && degree !== 0}
-            invalid={validated && degree === 0}
             required
           >
-            <option value={0}>Select a degree</option>
+            <option value="">Select a degree</option>
             <option value={1}>Bachelor</option>
             <option value={2}>Master</option>
             <option value={3}>PhD</option>

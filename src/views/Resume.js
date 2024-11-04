@@ -32,15 +32,7 @@ const Resume = () => {
   const [wechat, setWechat] = React.useState('')
   const [state, setState] = React.useState(0)
   const [description, setDescription] = React.useState('')
-  const [educations, setEducations] = React.useState([
-    {
-      school: 'University of Example',
-      major: 'Computer Science',
-      degree: 1,
-      start_time: '2015-09-01',
-      end_time: '2019-06-01',
-    },
-  ])
+  const [educations, setEducations] = React.useState([])
   const [experiences, setExperiences] = React.useState([])
   const [projects, setProjects] = React.useState([])
   const [isModalOpen, setIsModalOpen] = React.useState(false)
@@ -97,7 +89,6 @@ const Resume = () => {
       setValidated(true)
       return
     }
-    // 看后端怎么处理时间
     const data = {
       name: name,
       gender: gender,
@@ -191,8 +182,8 @@ const Resume = () => {
     setModalType('编辑工作经历')
   }
 
-  const handleEditProject = () => {
-    handleEditModalData()
+  const handleEditProject = (project, index) => () => {
+    handleEditModalData(project, index)
     setModalType('编辑项目经历')
   }
 
@@ -402,7 +393,7 @@ const Resume = () => {
                   <CCol md={4} className="my-1">
                     <strong>Company:</strong> {exp.company}
                   </CCol>
-                  <CCol md={4} className="my-1">
+                  <CCol md={8} className="my-1">
                     <strong>Position:</strong> {exp.position}
                   </CCol>
                   <CCol md={4} className="my-1">
@@ -457,7 +448,11 @@ const Resume = () => {
                     <strong>End Time:</strong> {new Date(project.end_time).toLocaleDateString()}
                   </CCol>
                   <CCol md={4} className="text-end">
-                    <CButton className="me-2 text-white" color="info" onClick={handleEditProject}>
+                    <CButton
+                      className="me-2 text-white"
+                      color="info"
+                      onClick={handleEditProject(project, index)}
+                    >
                       <CIcon icon={cilPencil} />
                     </CButton>
                     <CButton
