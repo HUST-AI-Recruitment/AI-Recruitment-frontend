@@ -18,6 +18,7 @@ const AllJobs = () => {
   const [own, setOwn] = React.useState(false)
   const getUrl = 'https://api.recruitment.kkkstra.cn/api/v1/jobs?own=' + own
   const token = useSelector((state) => state.authReducer.token)
+  const role = useSelector((state) => state.authReducer.role)
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -47,14 +48,18 @@ const AllJobs = () => {
   console.log('jobs', jobs)
   return (
     <>
-      <CFormCheck
-        type="checkbox"
-        id="own"
-        label="Only show my jobs"
-        checked={own}
-        onChange={(e) => setOwn(e.target.checked)}
-      />
-      <br />
+      {role === 1 && (
+        <>
+          <CFormCheck
+            type="checkbox"
+            id="own"
+            label="Only show my jobs"
+            checked={own}
+            onChange={(e) => setOwn(e.target.checked)}
+          />
+          <br />
+        </>
+      )}
       <CRow>
         {jobs.map((job, index) => (
           <CCol sm={3} key={index}>

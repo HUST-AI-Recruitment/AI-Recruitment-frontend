@@ -11,16 +11,22 @@ import {
 } from '@coreui/react'
 import { useSelector, useDispatch } from 'react-redux'
 import { setUsername } from 'src/reducers/authReducer'
+import { useParams } from 'react-router-dom'
 
 const Profile = () => {
   console.log('Profile')
   const dispatch = useDispatch()
   const [validated, setValidated] = React.useState(false)
 
+  // const userid = useSelector((state) => state.authReducer.userid)
+  const id = parseInt(useParams().id)
   const userid = useSelector((state) => state.authReducer.userid)
+  console.log('id', id)
+  console.log('userid', userid)
+
   const token = useSelector((state) => state.authReducer.token)
 
-  const getUrl = 'https://api.recruitment.kkkstra.cn/api/v1/user/' + userid + '/profile'
+  const getUrl = 'https://api.recruitment.kkkstra.cn/api/v1/user/' + id + '/profile'
   const putUrl = 'https://api.recruitment.kkkstra.cn/api/v1/user/me'
   const deleteUrl = 'https://api.recruitment.kkkstra.cn/api/v1/user/me'
 
@@ -43,14 +49,16 @@ const Profile = () => {
       const data = await response.json()
       const profile = data['data']['profile']
       setName(profile.username)
-      dispatch(setUsername(profile.username))
-      localStorage.setItem('username', profile.username)
+      if (id === userid) {
+        dispatch(setUsername(profile.username))
+        localStorage.setItem('username', profile.username)
+      }
       setEmail(profile.email)
       setAge(profile.age)
       setDegree(profile.degree)
     }
     fetchData()
-  }, [getUrl, token, dispatch])
+  }, [getUrl, token, dispatch, id, userid])
 
   const handleSubmit = async (event) => {
     const form = event.currentTarget
@@ -105,6 +113,7 @@ const Profile = () => {
             value={name}
             onChange={(e) => setName(e.target.value)}
             required
+            disabled={id !== userid}
           />
         </CCol>
         <CCol md={6} className="mb-3">
@@ -114,6 +123,7 @@ const Profile = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
+            disabled={id !== userid}
           />
         </CCol>
         <CCol md={6} className="mb-3">
@@ -124,6 +134,7 @@ const Profile = () => {
             value={age}
             onChange={(e) => setAge(parseInt(e.target.value))}
             required
+            disabled={id !== userid}
           />
         </CCol>
         <CCol md={6} className="mb-3">
@@ -136,6 +147,7 @@ const Profile = () => {
               e.target.blur()
             }}
             required
+            disabled={id !== userid}
           >
             <option value="">Select a degree</option>
             <option value={1}>Bachelor</option>
@@ -143,16 +155,22 @@ const Profile = () => {
             <option value={3}>PhD</option>
           </CFormSelect>
         </CCol>
-        <div className="mb-3">
-          <CButton type="submit" color="primary">
-            Save
-          </CButton>
-        </div>
+        {id === userid && (
+          <div className="mb-3">
+            <CButton type="submit" color="primary">
+              Save
+            </CButton>
+          </div>
+        )}
       </CForm>
-      <hr />
-      <CButton color="danger" onClick={handleDelete}>
-        Delete Account
-      </CButton>
+      {id === userid && (
+        <>
+          <hr />
+          <CButton color="danger" onClick={handleDelete}>
+            Delete Account
+          </CButton>
+        </>
+      )}
     </>
   )
 }
