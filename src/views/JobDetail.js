@@ -93,6 +93,25 @@ const JobDetail = () => {
     }
   }
 
+  const applyUrl = `https://api.recruitment.kkkstra.cn/api/v1/applications`
+  const handleApply = async () => {
+    console.log('apply job')
+    const response = await fetch(applyUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token,
+      },
+      body: JSON.stringify({
+        job_id: parseInt(id),
+      }),
+    })
+    if (response.ok) {
+      alert('Job application submitted successfully')
+      navigate('/all-jobs')
+    }
+  }
+
   return (
     <CCard style={{ width: '100%', marginBottom: '1rem' }}>
       <CCardBody>
@@ -113,13 +132,13 @@ const JobDetail = () => {
           <strong>薪水：</strong>
           {job.salary}
         </CCardText>
-        <CCardText as={'div'}>
+        <CCardText as={'div'} className="pb-3">
           <strong>职位描述：</strong>
           {job.description.split('\n').map((line, index) => (
             <div key={index}>{line}</div>
           ))}
         </CCardText>
-        <CCardText as={'div'}>
+        <CCardText as={'div'} className="pb-3">
           <strong>职位要求：</strong>
           {job.demand.split('\n').map((line, index) => (
             <div key={index}>{line}</div>
@@ -139,6 +158,11 @@ const JobDetail = () => {
               删除
             </CButton>
           </span>
+        )}
+        {role === 2 && (
+          <CButton color="primary" onClick={handleApply}>
+            申请职位
+          </CButton>
         )}
       </CCardFooter>
     </CCard>
