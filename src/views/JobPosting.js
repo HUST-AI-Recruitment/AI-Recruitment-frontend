@@ -1,13 +1,16 @@
 import React, { useEffect } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { CButton, CCol, CForm, CFormInput, CFormTextarea } from '@coreui/react'
+import { useJob } from 'src/views/JobDetail'
+import { clearJob } from 'src/reducers/jobReducer'
 
-const NewJobPosting = () => {
+const JobPosting = () => {
   const navigate = useNavigate()
   const role = useSelector((state) => state.authReducer.role)
   const postUrl = 'https://api.recruitment.kkkstra.cn/api/v1/jobs'
   const token = useSelector((state) => state.authReducer.token)
+  const dispatch = useDispatch()
 
   console.log('role', role)
 
@@ -19,6 +22,10 @@ const NewJobPosting = () => {
   }, [role, navigate])
 
   const [validated, setValidated] = React.useState(false)
+  const jobID = useSelector((state) => state.jobReducer.id)
+  const actionType = useSelector((state) => state.jobReducer.actionType)
+  const job = useJob(jobID)
+  console.log('job', job)
   const [title, setTitle] = React.useState('')
   const [description, setDescription] = React.useState('')
   const [demand, setDemand] = React.useState('')
@@ -27,15 +34,22 @@ const NewJobPosting = () => {
   const [salary, setSalary] = React.useState('')
   const [job_type, setJobType] = React.useState('')
 
-  const handleSubmit = async (event) => {
-    const form = event.currentTarget
-    if (form.checkValidity() === false) {
-      event.preventDefault()
-      event.stopPropagation()
-      setValidated(true)
-      return
+  useEffect(() => {
+    if (actionType === 'edit') {
+      setTitle(job.title)
+      setDescription(job.description)
+      setDemand(job.demand)
+      setLocation(job.location)
+      setCompany(job.company)
+      setSalary(job.salary)
+      setJobType(job.job_type)
     }
-    event.preventDefault()
+  }, [actionType, job])
+
+  const putUrl = `https://api.recruitment.kkkstra.cn/api/v1/jobs/${jobID}`
+
+  const handleAdd = async () => {
+    console.log('add job')
     const response = await fetch(postUrl, {
       method: 'POST',
       headers: {
@@ -63,6 +77,48 @@ const NewJobPosting = () => {
       setJobType('')
     } else {
       alert('Job posting creation failed')
+    }
+  }
+
+  const handleEdit = async () => {
+    console.log('edit job')
+    const response = await fetch(putUrl, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token,
+      },
+      body: JSON.stringify({
+        title: title,
+        description: description,
+        demand: demand,
+        location: location,
+        company: company,
+        salary: salary,
+        job_type: job_type,
+      }),
+    })
+    if (response.ok) {
+      alert('Job posting updated successfully')
+      const id = jobID
+      dispatch(clearJob())
+      navigate(`/job/${id}`)
+    }
+  }
+
+  const handleSubmit = async (event) => {
+    const form = event.currentTarget
+    if (form.checkValidity() === false) {
+      event.preventDefault()
+      event.stopPropagation()
+      setValidated(true)
+      return
+    }
+    event.preventDefault()
+    if (actionType === 'add') {
+      await handleAdd()
+    } else if (actionType === 'edit') {
+      await handleEdit()
     }
   }
 
@@ -144,4 +200,4 @@ const NewJobPosting = () => {
   )
 }
 
-export default NewJobPosting
+export default JobPosting

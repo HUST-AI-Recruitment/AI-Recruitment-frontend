@@ -18,8 +18,8 @@ const recruiterNavigation = (userid) => [
   },
   {
     component: CNavItem,
-    name: 'New Job Posting',
-    to: '/new-job-posting',
+    name: 'Job Posting',
+    to: '/job-posting',
     icon: <CIcon icon={cilNoteAdd} customClassName="nav-icon" />,
   },
 ]

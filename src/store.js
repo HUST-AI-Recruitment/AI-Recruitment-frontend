@@ -1,5 +1,6 @@
 import { combineReducers, legacy_createStore as createStore } from 'redux'
 import authReducer from './reducers/authReducer'
+import jobReducer from './reducers/jobReducer'
 
 const initialState = {
   sidebarShow: true,
@@ -23,6 +24,7 @@ const changeState = (state = initialState, { type, ...rest }) => {
 const reducers = combineReducers({
   changeState,
   authReducer,
+  jobReducer,
 })
 
 const store = createStore(
