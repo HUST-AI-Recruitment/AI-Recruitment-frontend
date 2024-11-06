@@ -1,20 +1,19 @@
-# 使用官方的 Node.js 18 版本作为基础镜像
-FROM node:22-alpine
+# The first FROM is now a stage called build-stage
+FROM node:22 AS build-stage
+WORKDIR /usr/src/app
 
-# 在容器内创建并设置工作目录
-WORKDIR /app
-
-# 复制 package.json 和 package-lock.json（如果有）到工作目录
-COPY package*.json ./
-
-# 安装依赖
-RUN npm install
-
-# 复制应用程序的所有源代码到工作目录
 COPY . .
 
-# 暴露应用运行的端口
-EXPOSE 3000
+RUN npm ci
 
-# 定义容器启动时运行的命令
-CMD ["npm", "start"]
+RUN npm run build
+
+# This is a new stage, everything before this is gone, except the files we want to COPY
+FROM nginx:alpine
+# COPY the directory build from build-stage to /usr/share/nginx/html
+# The target location here was found from the docker hub page
+COPY --from=build-stage /usr/src/app/build /usr/share/nginx/html
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]
