@@ -15,7 +15,7 @@ COPY . .
 RUN npm run build
 
 # ===== 第二阶段：生产环境 =====
-FROM nginx:alpine
+FROM nginx:latest
 
 # 复制构建产物到 Nginx 的默认静态文件目录
 COPY --from=build-stage /usr/src/app/build /usr/share/nginx/html
