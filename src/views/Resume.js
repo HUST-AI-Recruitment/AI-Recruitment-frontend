@@ -18,7 +18,6 @@ import {
 import CIcon from '@coreui/icons-react'
 import { cilPencil, cilPlaylistAdd, cilTrash } from '@coreui/icons'
 import { useSelector } from 'react-redux'
-import { set } from 'core-js/core/dict'
 
 const Resume = () => {
   const userid = useSelector((state) => state.authReducer.userid)
@@ -121,7 +120,7 @@ const Resume = () => {
       })),
     }
     const response = await fetch(postUrl, {
-      method: 'POST',
+      method: isGet? 'PUT': 'POST',
       headers: {
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + token,
@@ -129,9 +128,9 @@ const Resume = () => {
       body: JSON.stringify(data),
     })
     if (response.ok) {
-      alert('Resume created successfully')
+      isGet? alert('Resume created successfully') : alert('Resume updated successfully')
     } else {
-      alert('Resume creation failed')
+      isGet? alert('Resume creation failed') : alert('Resume update failed')
     }
   }
 
