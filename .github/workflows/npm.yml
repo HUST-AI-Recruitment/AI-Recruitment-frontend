@@ -11,6 +11,7 @@ env:
   FORCE_COLOR: 2
   NODE: 16
   CI: false
+  node-version: '20'
 
 jobs:
   build:
