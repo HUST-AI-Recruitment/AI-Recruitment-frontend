@@ -46,6 +46,12 @@ const JobPosting = () => {
     }
   }, [actionType, job])
 
+  useEffect(() => {
+    return () => {
+      dispatch(clearJob())
+    }
+  }, [dispatch])
+
   const putUrl = `https://api.recruitment.kkkstra.cn/api/v1/jobs/${jobID}`
 
   const handleAdd = async () => {

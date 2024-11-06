@@ -3,5 +3,5 @@ services:
   app:
     image: registry.cn-hangzhou.aliyuncs.com/kkkstra/ai-recruit-frontend:latest
     ports:
-      - '3001:3000'
+      - '3001:80'
     restart: always
