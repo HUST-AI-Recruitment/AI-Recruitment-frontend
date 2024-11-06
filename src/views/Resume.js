@@ -120,7 +120,7 @@ const Resume = () => {
       })),
     }
     const response = await fetch(postUrl, {
-      method: isGet? 'PUT': 'POST',
+      method: isGet ? 'PUT' : 'POST',
       headers: {
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + token,
@@ -128,9 +128,9 @@ const Resume = () => {
       body: JSON.stringify(data),
     })
     if (response.ok) {
-      isGet? alert('Resume created successfully') : alert('Resume updated successfully')
+      isGet ? alert('Resume created successfully') : alert('Resume updated successfully')
     } else {
-      isGet? alert('Resume creation failed') : alert('Resume update failed')
+      isGet ? alert('Resume creation failed') : alert('Resume update failed')
     }
   }
 
