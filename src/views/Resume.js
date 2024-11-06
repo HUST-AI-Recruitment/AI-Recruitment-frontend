@@ -39,6 +39,7 @@ const Resume = () => {
   const [modalType, setModalType] = React.useState('')
   const [modalData, setModalData] = React.useState({})
   const [index, setIndex] = React.useState(-1)
+  const [isGet, setIsGet] = React.useState(false)
 
   const key2Label = {
     school: 'School',
@@ -76,6 +77,7 @@ const Resume = () => {
         setEducations(resume.education || [])
         setExperiences(resume.experience || [])
         setProjects(resume.project || [])
+        setIsGet(true)
       }
     }
     fetchData()
@@ -118,7 +120,7 @@ const Resume = () => {
       })),
     }
     const response = await fetch(postUrl, {
-      method: 'POST',
+      method: isGet ? 'PUT' : 'POST',
       headers: {
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + token,
@@ -126,9 +128,9 @@ const Resume = () => {
       body: JSON.stringify(data),
     })
     if (response.ok) {
-      alert('Resume created successfully')
+      isGet ? alert('Resume created successfully') : alert('Resume updated successfully')
     } else {
-      alert('Resume creation failed')
+      isGet ? alert('Resume creation failed') : alert('Resume update failed')
     }
   }
 
