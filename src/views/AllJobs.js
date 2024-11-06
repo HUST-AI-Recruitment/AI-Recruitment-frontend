@@ -1,13 +1,24 @@
 import React from 'react'
-import { CCard, CCardBody, CCardTitle, CCardText, CButton, CCol, CRow } from '@coreui/react'
+import {
+  CCard,
+  CCardBody,
+  CCardTitle,
+  CCardText,
+  CButton,
+  CCol,
+  CRow,
+  CFormCheck,
+} from '@coreui/react'
 import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
 const AllJobs = () => {
   const [jobs, setJobs] = React.useState([])
-  const getUrl = 'https://api.recruitment.kkkstra.cn/api/v1/jobs'
+  const [own, setOwn] = React.useState(false)
+  const getUrl = 'https://api.recruitment.kkkstra.cn/api/v1/jobs?own=' + own
   const token = useSelector((state) => state.authReducer.token)
+  const role = useSelector((state) => state.authReducer.role)
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -37,6 +48,18 @@ const AllJobs = () => {
   console.log('jobs', jobs)
   return (
     <>
+      {role === 1 && (
+        <>
+          <CFormCheck
+            type="checkbox"
+            id="own"
+            label="Only show my jobs"
+            checked={own}
+            onChange={(e) => setOwn(e.target.checked)}
+          />
+          <br />
+        </>
+      )}
       <CRow>
         {jobs.map((job, index) => (
           <CCol sm={3} key={index}>
