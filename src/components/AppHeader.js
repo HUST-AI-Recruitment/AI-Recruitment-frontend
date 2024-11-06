@@ -56,12 +56,16 @@ const AppHeader = () => {
       localStorage.removeItem('expire')
       dispatch(clearAuthData())
       setLoggedIn(false)
+      navigate('/login')
     }
-  }, [dispatch])
+  }, [dispatch, navigate])
 
   useEffect(() => {
     setLoggedIn(token ? true : false)
-  }, [token])
+    if (token === null) {
+      navigate('/home')
+    }
+  }, [token, navigate])
 
   useEffect(() => {
     document.addEventListener('scroll', () => {

@@ -26,12 +26,14 @@ import SimpleBar from 'simplebar-react'
 import { recruiterNavigation, candidateNavigation } from 'src/nav'
 
 import { clearAuthData } from 'src/reducers/authReducer'
+import { useNavigate } from 'react-router-dom'
 
 const MyAppSidebar = () => {
   const dispatch = useDispatch()
   const unfoldable = useSelector((state) => state.changeState.sidebarUnfoldable)
   const sidebarShow = useSelector((state) => state.changeState.sidebarShow)
   const role = useSelector((state) => state.authReducer.role)
+  const navigate = useNavigate()
 
   console.log('MyAppSidebar role: ', role)
 
@@ -42,7 +44,7 @@ const MyAppSidebar = () => {
     localStorage.removeItem('userid')
     localStorage.removeItem('expire')
     dispatch(clearAuthData())
-    // TODO: Redirect to Home/Login page
+    navigate('/home')
   }
 
   const userid = useSelector((state) => state.authReducer.userid)
