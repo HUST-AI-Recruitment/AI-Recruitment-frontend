@@ -1,5 +1,5 @@
 # The first FROM is now a stage called build-stage
-FROM node:22 AS build-stage
+FROM node:22-alpine AS build-stage
 WORKDIR /usr/src/app
 
 COPY . .
