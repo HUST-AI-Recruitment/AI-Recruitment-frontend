@@ -18,6 +18,7 @@ import {
 import CIcon from '@coreui/icons-react'
 import { cilPencil, cilPlaylistAdd, cilTrash } from '@coreui/icons'
 import { useSelector } from 'react-redux'
+import { set } from 'core-js/core/dict'
 
 const Resume = () => {
   const userid = useSelector((state) => state.authReducer.userid)
@@ -39,6 +40,7 @@ const Resume = () => {
   const [modalType, setModalType] = React.useState('')
   const [modalData, setModalData] = React.useState({})
   const [index, setIndex] = React.useState(-1)
+  const [isGet, setIsGet] = React.useState(false)
 
   const key2Label = {
     school: 'School',
@@ -76,6 +78,7 @@ const Resume = () => {
         setEducations(resume.education || [])
         setExperiences(resume.experience || [])
         setProjects(resume.project || [])
+        setIsGet(true)
       }
     }
     fetchData()
