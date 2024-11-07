@@ -34,7 +34,7 @@ const AllJobs = () => {
         return
       }
       const data = await response.json()
-      setJobs(data['data']['jobs'])
+      setJobs(data['data']['jobs'] || [])
     }
     fetchData()
   }, [getUrl, token])
