@@ -1,0 +1,37 @@
+name: Docker Image CI
+
+on:
+  push:
+    tags: [ "*" ]
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build Image
+      run: docker build -t ${{ secrets.ALI_DOCKER_HUB_REGISTRY }}:${{ github.ref_name }} .
+    - name: Login to Registry # 登录阿里云镜像服务器
+      run: docker login --username=${{ secrets.ALI_DOCKER_HUB_USERNAME }} --password=${{ secrets.ALI_DOCKER_HUB_PASSWORD }} registry.cn-hangzhou.aliyuncs.com
+    - name: Push Image # 推送镜像，设置版本为 tag
+      run: docker push ${{ secrets.ALI_DOCKER_HUB_REGISTRY }}:${{ github.ref_name }}
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+    - name: Deploy
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.REMOTE_HOST }}
+        username: ${{ secrets.REMOTE_HOST_USERNAME }}
+        key: ${{ secrets.REMOTE_PRIVATE_KEY }}
+        port: ${{ secrets.REMOTE_HOST_PORT }}
+        script: |
+          cd ${{ secrets.REMOTE_WORK_DIR }}
+          git pull
+          docker login --username=${{ secrets.ALI_DOCKER_HUB_USERNAME }} --password=${{ secrets.ALI_DOCKER_HUB_PASSWORD }} registry.cn-hangzhou.aliyuncs.com
+          docker pull ${{ secrets.ALI_DOCKER_HUB_REGISTRY }}:${{ github.ref_name }}
+          docker image prune
+          docker compose stop
+          docker compose up -d --build
