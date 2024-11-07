@@ -29,6 +29,7 @@ jobs:
         port: ${{ secrets.REMOTE_HOST_PORT }}
         script: |
           cd ${{ secrets.REMOTE_WORK_DIR }}
+          git pull
           docker login --username=${{ secrets.ALI_DOCKER_HUB_USERNAME }} --password=${{ secrets.ALI_DOCKER_HUB_PASSWORD }} registry.cn-hangzhou.aliyuncs.com
           docker pull ${{ secrets.ALI_DOCKER_HUB_REGISTRY }}:${{ github.ref_name }}
           docker image prune
