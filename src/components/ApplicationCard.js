@@ -124,6 +124,7 @@ const ApplicationCard = ({ application }) => {
           进度：{progress2Info[progress]}
         </CCardText>
         <div className="d-flex justify-content-end">
+          <CButton style={{ visibility: 'hidden' }}>N</CButton>
           {role === 1 && (
             <CButton
               onClick={() => {
