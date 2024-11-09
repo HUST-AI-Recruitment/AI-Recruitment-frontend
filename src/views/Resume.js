@@ -14,15 +14,18 @@ import {
   CModalTitle,
   CModalBody,
   CModalFooter,
+  CAlert,
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import { cilPencil, cilPlaylistAdd, cilTrash } from '@coreui/icons'
 import { useSelector } from 'react-redux'
+import { useParams } from 'react-router-dom'
 
 const Resume = () => {
+  const id = parseInt(useParams().id)
   const userid = useSelector((state) => state.authReducer.userid)
   const token = useSelector((state) => state.authReducer.token)
-  const getUrl = `https://api.recruitment.kkkstra.cn/api/v1/resumes/${userid}`
+  const getUrl = `https://api.recruitment.kkkstra.cn/api/v1/resumes/${id}`
   const postUrl = `https://api.recruitment.kkkstra.cn/api/v1/resumes`
   const [validated, setValidated] = React.useState(false)
   const [name, setName] = React.useState('')
@@ -40,6 +43,7 @@ const Resume = () => {
   const [modalData, setModalData] = React.useState({})
   const [index, setIndex] = React.useState(-1)
   const [isGet, setIsGet] = React.useState(false)
+  const disabled = userid !== id
 
   const key2Label = {
     school: 'School',
@@ -250,6 +254,11 @@ const Resume = () => {
 
   return (
     <>
+      {!disabled && (
+        <CAlert color="info" dismissible>
+          如果在此页面有任何修改，请及时保存
+        </CAlert>
+      )}
       <CForm className="row g-3" noValidate validated={validated} onSubmit={handleSubmit}>
         <CCol md={6}>
           <CFormInput
@@ -257,6 +266,8 @@ const Resume = () => {
             label="Name"
             value={name}
             onChange={(e) => setName(e.target.value)}
+            disabled={disabled}
+            style={{ backgroundColor: 'white' }}
             required
           />
         </CCol>
@@ -270,6 +281,8 @@ const Resume = () => {
               else setGender(parseInt(e.target.value))
               e.target.blur()
             }}
+            disabled={disabled}
+            style={{ backgroundColor: 'white' }}
             required
           >
             <option value="">Select Gender</option>
@@ -283,6 +296,8 @@ const Resume = () => {
             label="Phone"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
+            disabled={disabled}
+            style={{ backgroundColor: 'white' }}
             required
           />
         </CCol>
@@ -292,6 +307,8 @@ const Resume = () => {
             label="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            disabled={disabled}
+            style={{ backgroundColor: 'white' }}
             required
           />
         </CCol>
@@ -301,6 +318,8 @@ const Resume = () => {
             label="Wechat"
             value={wechat}
             onChange={(e) => setWechat(e.target.value)}
+            disabled={disabled}
+            style={{ backgroundColor: 'white' }}
             required
           />
         </CCol>
@@ -314,6 +333,8 @@ const Resume = () => {
               else setState(parseInt(e.target.value))
               e.target.blur()
             }}
+            disabled={disabled}
+            style={{ backgroundColor: 'white' }}
             required
           >
             <option value="">请选择求职状态</option>
@@ -327,18 +348,21 @@ const Resume = () => {
           <CFormTextarea
             type="text"
             label="Description"
-            style={{ height: '6em' }}
+            style={{ height: '6em', backgroundColor: 'white' }}
             value={description}
             onChange={(e) => setDescription(e.target.value)}
+            disabled={disabled}
             required
           />
         </CCol>
         <h5>Education</h5>
-        <CCol md={12}>
-          <CButton color="info" onClick={handleAddEducation} className="text-white">
-            <CIcon icon={cilPlaylistAdd} /> 添加教育经历
-          </CButton>
-        </CCol>
+        {!disabled && (
+          <CCol md={12}>
+            <CButton color="info" onClick={handleAddEducation} className="text-white">
+              <CIcon icon={cilPlaylistAdd} /> 添加教育经历
+            </CButton>
+          </CCol>
+        )}
         <CCol md={12}>
           <CListGroup>
             {educations.map((edu, index) => (
@@ -359,34 +383,38 @@ const Resume = () => {
                   <CCol md={4}>
                     <strong>End Time:</strong> {new Date(edu.end_time).toLocaleDateString()}
                   </CCol>
-                  <CCol md={4} className="text-end">
-                    <CButton
-                      className="me-2 text-white"
-                      color="info"
-                      onClick={handleEditEducation(edu, index)}
-                    >
-                      <CIcon icon={cilPencil} />
-                    </CButton>
-                    <CButton
-                      color="danger text-white"
-                      onClick={() => {
-                        setEducations(educations.filter((_, i) => i !== index))
-                      }}
-                    >
-                      <CIcon icon={cilTrash} />
-                    </CButton>
-                  </CCol>
+                  {!disabled && (
+                    <CCol md={4} className="text-end">
+                      <CButton
+                        className="me-2 text-white"
+                        color="info"
+                        onClick={handleEditEducation(edu, index)}
+                      >
+                        <CIcon icon={cilPencil} />
+                      </CButton>
+                      <CButton
+                        color="danger text-white"
+                        onClick={() => {
+                          setEducations(educations.filter((_, i) => i !== index))
+                        }}
+                      >
+                        <CIcon icon={cilTrash} />
+                      </CButton>
+                    </CCol>
+                  )}
                 </CRow>
               </CListGroupItem>
             ))}
           </CListGroup>
         </CCol>
         <h5>Experience</h5>
-        <CCol md={12}>
-          <CButton color="info" className="text-white" onClick={handleAddExperience}>
-            <CIcon icon={cilPlaylistAdd} /> 添加工作经历
-          </CButton>
-        </CCol>
+        {!disabled && (
+          <CCol md={12}>
+            <CButton color="info" className="text-white" onClick={handleAddExperience}>
+              <CIcon icon={cilPlaylistAdd} /> 添加工作经历
+            </CButton>
+          </CCol>
+        )}
         <CCol md={12}>
           <CListGroup>
             {experiences.map((exp, index) => (
@@ -404,34 +432,38 @@ const Resume = () => {
                   <CCol md={4} className="my-1">
                     <strong>End Time:</strong> {new Date(exp.end_time).toLocaleDateString()}
                   </CCol>
-                  <CCol md={4} className="text-end">
-                    <CButton
-                      className="me-2 text-white"
-                      color="info"
-                      onClick={handleEditExperience(exp, index)}
-                    >
-                      <CIcon icon={cilPencil} />
-                    </CButton>
-                    <CButton
-                      color="danger text-white"
-                      onClick={() => {
-                        setExperiences(experiences.filter((_, i) => i !== index))
-                      }}
-                    >
-                      <CIcon icon={cilTrash} />
-                    </CButton>
-                  </CCol>
+                  {!disabled && (
+                    <CCol md={4} className="text-end">
+                      <CButton
+                        className="me-2 text-white"
+                        color="info"
+                        onClick={handleEditExperience(exp, index)}
+                      >
+                        <CIcon icon={cilPencil} />
+                      </CButton>
+                      <CButton
+                        color="danger text-white"
+                        onClick={() => {
+                          setExperiences(experiences.filter((_, i) => i !== index))
+                        }}
+                      >
+                        <CIcon icon={cilTrash} />
+                      </CButton>
+                    </CCol>
+                  )}
                 </CRow>
               </CListGroupItem>
             ))}
           </CListGroup>
         </CCol>
         <h5>Project</h5>
-        <CCol md={12}>
-          <CButton color="info" className="text-white" onClick={handleAddProject}>
-            <CIcon icon={cilPlaylistAdd} /> 添加项目经历
-          </CButton>
-        </CCol>
+        {!disabled && (
+          <CCol md={12}>
+            <CButton color="info" className="text-white" onClick={handleAddProject}>
+              <CIcon icon={cilPlaylistAdd} /> 添加项目经历
+            </CButton>
+          </CCol>
+        )}
         <CCol md={12}>
           <CListGroup>
             {projects.map((project, index) => (
@@ -449,33 +481,37 @@ const Resume = () => {
                   <CCol md={4} className="my-1">
                     <strong>End Time:</strong> {new Date(project.end_time).toLocaleDateString()}
                   </CCol>
-                  <CCol md={4} className="text-end">
-                    <CButton
-                      className="me-2 text-white"
-                      color="info"
-                      onClick={handleEditProject(project, index)}
-                    >
-                      <CIcon icon={cilPencil} />
-                    </CButton>
-                    <CButton
-                      color="danger text-white"
-                      onClick={() => {
-                        setProjects(projects.filter((_, i) => i !== index))
-                      }}
-                    >
-                      <CIcon icon={cilTrash} />
-                    </CButton>
-                  </CCol>
+                  {!disabled && (
+                    <CCol md={4} className="text-end">
+                      <CButton
+                        className="me-2 text-white"
+                        color="info"
+                        onClick={handleEditProject(project, index)}
+                      >
+                        <CIcon icon={cilPencil} />
+                      </CButton>
+                      <CButton
+                        color="danger text-white"
+                        onClick={() => {
+                          setProjects(projects.filter((_, i) => i !== index))
+                        }}
+                      >
+                        <CIcon icon={cilTrash} />
+                      </CButton>
+                    </CCol>
+                  )}
                 </CRow>
               </CListGroupItem>
             ))}
           </CListGroup>
         </CCol>
-        <div className="mt-3">
-          <CButton type="submit" color="primary">
-            Submit
-          </CButton>
-        </div>
+        {!disabled && (
+          <div className="mt-3">
+            <CButton type="submit" color="primary">
+              Submit
+            </CButton>
+          </div>
+        )}
       </CForm>
       <CModal visible={isModalOpen} onClose={() => setIsModalOpen(false)}>
         <CModalHeader>
@@ -490,6 +526,7 @@ const Resume = () => {
                     type={key === 'start_time' || key === 'end_time' ? 'date' : 'text'}
                     label={key2Label[key]}
                     value={key === 'start_time' || key === 'end_time' ? value.slice(0, 10) : value}
+                    min={key === 'end_time' ? modalData['start_time'].slice(0, 10) : ''}
                     onChange={(e) => setModalData({ ...modalData, [key]: e.target.value })}
                     required
                   />

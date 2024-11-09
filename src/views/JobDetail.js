@@ -145,26 +145,36 @@ const JobDetail = () => {
           ))}
         </CCardText>
       </CCardBody>
-      <CCardFooter>
-        {role === 1 && job.owner_id === userid && (
+      {role === 1 && job.owner_id === userid && (
+        <CCardFooter>
           <span>
-            <CButton color="primary" onClick={handleEdit}>
-              <CIcon icon={cilPencil} />
-              编辑
+            <CButton color="primary" onClick={handleEdit} className="text-white">
+              <CIcon icon={cilPencil} /> 编辑
             </CButton>
             <span> </span>
             <CButton color="danger" onClick={handleDelete} className="text-white">
-              <CIcon icon={cilTrash} />
-              删除
+              <CIcon icon={cilTrash} /> 删除
+            </CButton>
+            <span> </span>
+            <CButton
+              color="info"
+              onClick={() => {
+                navigate(`/application/job/${id}`)
+              }}
+              className="text-white"
+            >
+              查看申请
             </CButton>
           </span>
-        )}
-        {role === 2 && (
+        </CCardFooter>
+      )}
+      {role === 2 && (
+        <CCardFooter>
           <CButton color="primary" onClick={handleApply}>
             申请职位
           </CButton>
-        )}
-      </CCardFooter>
+        </CCardFooter>
+      )}
     </CCard>
   )
 }

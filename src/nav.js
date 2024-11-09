@@ -1,7 +1,7 @@
 import React from 'react'
 import { CNavItem } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
-import { cilUser, cilNoteAdd, cilObjectGroup } from '@coreui/icons'
+import { cilUser, cilNoteAdd, cilObjectGroup, cilListRich } from '@coreui/icons'
 
 const recruiterNavigation = (userid) => [
   {
@@ -40,8 +40,14 @@ const candidateNavigation = (userid) => [
   {
     component: CNavItem,
     name: 'Resume',
-    to: '/resume',
+    to: `/resume/${userid}`,
     icon: <CIcon icon={cilNoteAdd} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
+    name: 'My Application',
+    to: '/application',
+    icon: <CIcon icon={cilListRich} customClassName="nav-icon" />,
   },
 ]
 

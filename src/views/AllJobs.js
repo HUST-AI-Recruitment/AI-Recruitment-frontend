@@ -63,12 +63,18 @@ const AllJobs = () => {
       <CRow>
         {jobs.map((job, index) => (
           <CCol sm={3} key={index}>
-            <CCard key={job.id} style={{ width: '18rem', marginBottom: '1rem' }}>
+            <CCard key={job.id} style={{ width: '16rem', marginBottom: '1rem' }}>
               <CCardBody>
                 <CCardTitle>{job.title}</CCardTitle>
-                <CCardText>地址：{job.location}</CCardText>
-                <CCardText>薪水：{job.salary}</CCardText>
-                <CCardText>公司名：{job.company}</CCardText>
+                <CCardText as={'div'} style={{ marginBottom: '0.5rem' }}>
+                  地址：{job.location}
+                </CCardText>
+                <CCardText as={'div'} style={{ marginBottom: '0.5rem' }}>
+                  薪水：{job.salary}
+                </CCardText>
+                <CCardText as={'div'} style={{ marginBottom: '0.5rem' }}>
+                  公司名：{job.company}
+                </CCardText>
                 <CButton color="primary" href="#" onClick={handleClick(job.id)}>
                   查看详情
                 </CButton>

@@ -89,19 +89,19 @@ const Profile = () => {
     }
   }
 
-  const handleDelete = async () => {
-    const response = await fetch(deleteUrl, {
-      method: 'DELETE',
-      headers: {
-        Authorization: 'Bearer ' + token,
-      },
-    })
-    if (response.ok) {
-      alert('Account deleted')
-    } else {
-      alert('Account deletion failed')
-    }
-  }
+  // const handleDelete = async () => {
+  //   const response = await fetch(deleteUrl, {
+  //     method: 'DELETE',
+  //     headers: {
+  //       Authorization: 'Bearer ' + token,
+  //     },
+  //   })
+  //   if (response.ok) {
+  //     alert('Account deleted')
+  //   } else {
+  //     alert('Account deletion failed')
+  //   }
+  // }
 
   return (
     <>
@@ -163,14 +163,14 @@ const Profile = () => {
           </div>
         )}
       </CForm>
-      {id === userid && (
+      {/* {id === userid && (
         <>
           <hr />
           <CButton color="danger" onClick={handleDelete}>
             Delete Account
           </CButton>
         </>
-      )}
+      )} */}
     </>
   )
 }
