@@ -123,7 +123,11 @@ const ApplicationCard = ({ application }) => {
   return (
     <CCard
       key={id}
-      style={{ width: '18rem', marginBottom: '1rem', border: `solid ${progress2Color[progress]}` }}
+      style={{
+        minWidth: '16rem',
+        marginBottom: '1rem',
+        border: `solid ${progress2Color[progress]}`,
+      }}
     >
       <CCardBody>
         {role === 1 ? (

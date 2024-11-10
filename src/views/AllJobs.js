@@ -174,10 +174,10 @@ const AllJobs = () => {
           <CSpinner className="ms-auto" />
         </div>
       )}
-      <CRow className="pt-3">
+      <CRow className="pt-3" xs={{ cols: 'auto' }}>
         {jobs.map((job, index) => (
-          <CCol sm={3} key={index}>
-            <CCard key={job.id} style={{ width: '16rem', marginBottom: '1rem' }}>
+          <CCol key={index}>
+            <CCard key={job.id} style={{ marginBottom: '1rem', minWidth: '14rem' }}>
               <CCardBody>
                 <CCardTitle>{job.title}</CCardTitle>
                 <CCardText as={'div'} style={{ marginBottom: '0.5rem' }}>

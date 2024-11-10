@@ -78,9 +78,9 @@ const ApplicationForJob = () => {
           <CSpinner className="ms-auto" />
         </div>
       )}
-      <CRow className="pt-3">
+      <CRow className="pt-3" xs={{ cols: 'auto' }}>
         {applications.map((application) => (
-          <CCol sm={3} key={application.id}>
+          <CCol key={application.id}>
             <ApplicationCard application={application}></ApplicationCard>
           </CCol>
         ))}

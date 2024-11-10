@@ -27,9 +27,9 @@ const MyApplication = () => {
   }, [getUrl, token])
 
   return (
-    <CRow>
+    <CRow xs={{ cols: 'auto' }}>
       {myApplications.map((application) => (
-        <CCol sm={3} key={application.id}>
+        <CCol key={application.id}>
           <ApplicationCard application={application}></ApplicationCard>
         </CCol>
       ))}
