@@ -8,18 +8,31 @@ import {
   CCol,
   CRow,
   CFormCheck,
+  CInputGroup,
+  CFormInput,
+  CInputGroupText,
+  CForm,
+  CSpinner,
 } from '@coreui/react'
 import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import CIcon from '@coreui/icons-react'
+import { cilSearch } from '@coreui/icons'
 
 const AllJobs = () => {
   const [jobs, setJobs] = React.useState([])
+  const [allJobs, setAllJobs] = React.useState([])
   const [own, setOwn] = React.useState(false)
   const getUrl = 'https://api.recruitment.kkkstra.cn/api/v1/jobs?own=' + own
+  const recommendUrl = 'https://api.recruitment.kkkstra.cn/api/v1/recommend/jobs'
   const token = useSelector((state) => state.authReducer.token)
   const role = useSelector((state) => state.authReducer.role)
   const navigate = useNavigate()
+  const [recommendBy, setRecommendBy] = React.useState(0)
+  const [searchText, setSearchText] = React.useState('')
+  const [loading, setLoading] = React.useState(false)
+  const userid = useSelector((state) => state.authReducer.userid)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,6 +47,7 @@ const AllJobs = () => {
         return
       }
       const data = await response.json()
+      setAllJobs(data['data']['jobs'] || [])
       setJobs(data['data']['jobs'] || [])
     }
     fetchData()
@@ -45,22 +59,122 @@ const AllJobs = () => {
     navigate(`/job/${jobId}`)
   }
 
+  const handleRecommendSubmit = async () => {
+    setLoading(true)
+    console.log('recommendBy', recommendBy)
+    const response = await fetch(recommendUrl, {
+      method: recommendBy === 2 ? 'POST' : 'GET',
+      headers: {
+        Authorization: 'Bearer ' + token,
+        'Content-Type': 'application/json',
+      },
+      body: recommendBy === 2 ? JSON.stringify({ description: searchText }) : null,
+    })
+    if (!response.ok) {
+      if (recommendBy === 1) {
+        alert('请先填写简历')
+        navigate(`/resume/${userid}`)
+      }
+      return
+    } else {
+      const data = await response.json()
+      console.log('data', data)
+      console.log('data[data]', data['data'])
+      console.log('data[data][jobs]', data['data']['jobs'])
+      const jobIds = data['data']['jobs'] || []
+      console.log('jobIds', jobIds)
+      const recommendJobs = jobIds.map((jobId) => allJobs.find((job) => job.id === jobId))
+      console.log('recommendJobs', recommendJobs)
+      setJobs(recommendJobs)
+      setLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    if (recommendBy === 0) {
+      setJobs(allJobs)
+    }
+    setSearchText('')
+  }, [recommendBy, allJobs])
+
   console.log('jobs', jobs)
+  console.log('allJobs', allJobs)
+  console.log('recommendBy', recommendBy)
+
   return (
     <>
       {role === 1 && (
-        <>
-          <CFormCheck
-            type="checkbox"
-            id="own"
-            label="Only show my jobs"
-            checked={own}
-            onChange={(e) => setOwn(e.target.checked)}
-          />
-          <br />
-        </>
+        <CFormCheck
+          type="checkbox"
+          id="own"
+          label="Only show my jobs"
+          checked={own}
+          onChange={(e) => setOwn(e.target.checked)}
+        />
       )}
-      <CRow>
+      {role === 2 && (
+        <CCol>
+          <CFormCheck
+            type="radio"
+            label="默认排序"
+            value={0}
+            checked={recommendBy === 0}
+            onChange={(e) => setRecommendBy(parseInt(e.target.value))}
+            inline
+            disabled={loading}
+          />
+          <CFormCheck
+            type="radio"
+            label="依据简历 AI 推荐"
+            value={1}
+            checked={recommendBy === 1}
+            onChange={(e) => {
+              setRecommendBy(parseInt(e.target.value))
+              setSearchText('')
+              handleRecommendSubmit()
+            }}
+            inline
+            disabled={loading}
+          />
+          <CFormCheck
+            type="radio"
+            label="依据描述 AI 推荐"
+            value={2}
+            checked={recommendBy === 2}
+            onChange={(e) => setRecommendBy(parseInt(e.target.value))}
+            inline
+            disabled={loading}
+          />
+          {recommendBy === 2 && (
+            <CForm
+              onSubmit={(e) => {
+                e.preventDefault()
+                handleRecommendSubmit()
+              }}
+            >
+              <CInputGroup className="mt-2">
+                <CInputGroupText>
+                  <CIcon icon={cilSearch} />
+                </CInputGroupText>
+                <CFormInput
+                  type="text"
+                  placeholder="搜索"
+                  value={searchText}
+                  onChange={(e) => setSearchText(e.target.value)}
+                  disabled={loading}
+                />
+              </CInputGroup>
+            </CForm>
+          )}
+        </CCol>
+      )}
+      {loading && (
+        <div className="pt-2 text-start">
+          <strong role="status">Loading... </strong>
+          <CSpinner className="ms-auto" />
+        </div>
+      )}
+      <CRow className="pt-3">
         {jobs.map((job, index) => (
           <CCol sm={3} key={index}>
             <CCard key={job.id} style={{ width: '16rem', marginBottom: '1rem' }}>
