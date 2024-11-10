@@ -21,7 +21,7 @@ const MyApplication = () => {
         return
       }
       const data = await response.json()
-      setMyApplications(data['data']['applications'])
+      setMyApplications(data['data']['applications'] || [])
     }
     fetchData()
   }, [getUrl, token])

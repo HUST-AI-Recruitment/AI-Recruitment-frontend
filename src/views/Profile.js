@@ -28,7 +28,7 @@ const Profile = () => {
 
   const getUrl = 'https://api.recruitment.kkkstra.cn/api/v1/user/' + id + '/profile'
   const putUrl = 'https://api.recruitment.kkkstra.cn/api/v1/user/' + id + '/profile'
-  const deleteUrl = 'https://api.recruitment.kkkstra.cn/api/v1/user/me'
+  // const deleteUrl = 'https://api.recruitment.kkkstra.cn/api/v1/user/me'
 
   const [name, setName] = React.useState('')
   const [email, setEmail] = React.useState('')

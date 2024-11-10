@@ -200,6 +200,7 @@ const Register = () => {
                     </CInputGroupText>
                     <CFormInput
                       type="password"
+                      minLength={6}
                       placeholder="Password"
                       autoComplete="new-password"
                       onChange={(e) => setPassword(e.target.value)}
@@ -212,6 +213,7 @@ const Register = () => {
                     </CInputGroupText>
                     <CFormInput
                       type="password"
+                      minLength={6}
                       placeholder="Repeat password"
                       autoComplete="new-password"
                       onChange={(e) => setRepeatPassword(e.target.value)}

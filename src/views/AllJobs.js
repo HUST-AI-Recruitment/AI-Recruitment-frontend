@@ -70,14 +70,17 @@ const AllJobs = () => {
       },
       body: recommendBy === 2 ? JSON.stringify({ description: searchText }) : null,
     })
+    const data = await response.json()
     if (!response.ok) {
-      if (recommendBy === 1) {
+      setLoading(false)
+      console.log('get recommend jobs failed')
+      console.log('response', response)
+      if (data['msg'] === 'get resume list failed') {
         alert('请先填写简历')
         navigate(`/resume/${userid}`)
       }
       return
     } else {
-      const data = await response.json()
       console.log('data', data)
       console.log('data[data]', data['data'])
       console.log('data[data][jobs]', data['data']['jobs'])
@@ -131,6 +134,8 @@ const AllJobs = () => {
             onChange={(e) => {
               setRecommendBy(parseInt(e.target.value))
               setSearchText('')
+              e.preventDefault()
+              e.stopPropagation()
               handleRecommendSubmit()
             }}
             inline
