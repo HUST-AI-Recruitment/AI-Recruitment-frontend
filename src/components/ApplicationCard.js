@@ -20,7 +20,9 @@ const ApplicantCard = ({ job_id }) => {
   )
 }
 
-const RecruiterCard = ({ user_id }) => {
+const RecruiterCard = (props) => {
+  const user_id = props.user_id
+  const score = props.score
   const getUrl = `https://api.recruitment.kkkstra.cn/api/v1/resumes/${user_id}`
   const token = useSelector((state) => state.authReducer.token)
   const [resume, setResume] = useState({})
@@ -63,12 +65,21 @@ const RecruiterCard = ({ user_id }) => {
       <CCardText as={'div'} style={{ marginBottom: '0.5rem' }}>
         status: {state2Info[resume.state]}
       </CCardText>
+      {score !== undefined && (
+        <CCardText as={'div'} style={{ marginBottom: '0.5rem' }}>
+          AI 评分：{score}
+        </CCardText>
+      )}
     </>
   )
 }
 
 const ApplicationCard = ({ application }) => {
-  const { id, job_id, user_id, progress } = application
+  const id = application.id
+  const job_id = application.job_id
+  const user_id = application.user_id
+  const progress = application.progress
+  const score = application.score
   const putUrl = `https://api.recruitment.kkkstra.cn/api/v1/applications/${id}`
   const role = useSelector((state) => state.authReducer.role)
   const navigate = useNavigate()
@@ -118,7 +129,7 @@ const ApplicationCard = ({ application }) => {
         {role === 1 ? (
           <RecruiterCard user_id={user_id} progress={progress} />
         ) : (
-          <ApplicantCard job_id={job_id} progress={progress} />
+          <ApplicantCard job_id={job_id} progress={progress} score={score} />
         )}
         <CCardText as={'div'} style={{ marginBottom: '0.5rem' }}>
           进度：{progress2Info[progress]}
@@ -164,6 +175,7 @@ ApplicationCard.propTypes = {
     job_id: PropTypes.number.isRequired,
     user_id: PropTypes.number.isRequired,
     progress: PropTypes.number.isRequired,
+    score: PropTypes.number,
   }).isRequired,
 }
 
@@ -173,6 +185,7 @@ ApplicantCard.propTypes = {
 
 RecruiterCard.propTypes = {
   user_id: PropTypes.number.isRequired,
+  score: PropTypes.number,
 }
 
 export default ApplicationCard

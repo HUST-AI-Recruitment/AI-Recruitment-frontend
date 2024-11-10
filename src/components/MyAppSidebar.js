@@ -6,6 +6,7 @@ import {
   CCloseButton,
   CContainer,
   CNavbar,
+  CNavLink,
   CSidebar,
   CSidebarBrand,
   CSidebarFooter,
@@ -19,8 +20,7 @@ import { AppSidebarNav } from 'src/components/AppSidebarNav'
 import { logo } from 'src/assets/brand/logo'
 import { sygnet } from 'src/assets/brand/sygnet'
 import { cilAccountLogout } from '@coreui/icons'
-import { CSidebarNav, CNavItem } from '@coreui/react'
-import SimpleBar from 'simplebar-react'
+import { CNavItem } from '@coreui/react'
 
 // sidebar nav config
 import { recruiterNavigation, candidateNavigation } from 'src/nav'
@@ -62,8 +62,14 @@ const MyAppSidebar = () => {
     >
       <CSidebarHeader className="border-bottom">
         <CSidebarBrand to="/">
-          <CIcon customClassName="sidebar-brand-full" icon={logo} height={32} />
-          <CIcon customClassName="sidebar-brand-narrow" icon={sygnet} height={32} />
+          {/* <CIcon customClassName="sidebar-brand-full" icon={logo} height={32} /> */}
+          {/* <CIcon customClassName="sidebar-brand-narrow" icon={sygnet} height={32} /> */}
+          <div className="sidebar-brand-full" style={{ fontSize: '1.2rem' }}>
+            AI Recruitment
+          </div>
+          <div className="sidebar-brand-narrow" style={{ fontSize: '1.2rem' }}>
+            AI
+          </div>
         </CSidebarBrand>
         <CCloseButton
           className="d-lg-none"
@@ -71,16 +77,22 @@ const MyAppSidebar = () => {
           onClick={() => dispatch({ type: 'setSidebarShow', sidebarShow: false })}
         />
       </CSidebarHeader>
-      <AppSidebarNav
-        items={role === 1 ? recruiterNavigation(userid) : candidateNavigation(userid)}
-      />
-      <CSidebarFooter className="border-top d-none d-lg-flex" style={{ marginLeft: '-8px' }}>
-        <CSidebarNav as={SimpleBar}>
-          <CNavItem as="div" className="d-flex align-items-center">
-            <CIcon icon={cilAccountLogout} customClassName="nav-icon" />
-            <CButton onClick={handleLogout}>Logout</CButton>
+      <AppSidebarNav items={role === 1 ? recruiterNavigation(userid) : candidateNavigation(userid)}>
+        <div style={{ position: 'absolute', bottom: 0, width: '100%' }}>
+          <CNavItem as="div">
+            <CNavLink>
+              <CIcon icon={cilAccountLogout} customClassName="nav-icon" />
+              <CButton onClick={handleLogout} style={{ margin: '4px', padding: 0 }}>
+                Logout
+              </CButton>
+            </CNavLink>
           </CNavItem>
-        </CSidebarNav>
+        </div>
+      </AppSidebarNav>
+      <CSidebarFooter className="border-top d-none d-lg-flex">
+        <CSidebarToggler
+          onClick={() => dispatch({ type: 'setSidebarUnfoldable', sidebarUnfoldable: !unfoldable })}
+        />
       </CSidebarFooter>
     </CSidebar>
   )
