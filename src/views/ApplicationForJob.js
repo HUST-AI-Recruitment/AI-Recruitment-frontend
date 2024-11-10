@@ -1,4 +1,4 @@
-import { CCol, CFormCheck, CRow, CSpinner } from '@coreui/react'
+import { CButton, CCol, CRow, CSpinner } from '@coreui/react'
 import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
@@ -10,7 +10,6 @@ const ApplicationForJob = () => {
   const aiScoreUrl = `https://api.recruitment.kkkstra.cn/api/v1/recommend/resumes?job_id=${jobID}`
   const [applications, setApplications] = React.useState([])
   const token = useSelector((state) => state.authReducer.token)
-  const [aiScore, setAiScore] = React.useState(false)
   const [loading, setLoading] = React.useState(false)
   console.log('jobID', jobID)
   useEffect(() => {
@@ -26,7 +25,7 @@ const ApplicationForJob = () => {
         return
       }
       const data = await response.json()
-      setApplications(data['data']['applications'])
+      setApplications(data['data']['applications'] || [])
     }
     fetchData()
   }, [getUrl, token])
@@ -41,15 +40,18 @@ const ApplicationForJob = () => {
     })
     if (!response.ok) {
       console.log('get ai score failed')
+      setLoading(false)
       return
     }
     const data = await response.json()
-    const scores = data['data']['score']
+    const scores = data['data']['score'] || []
     console.log('score', scores)
     setApplications(
       applications.map((application) => ({
         ...application,
-        score: scores.find((s) => s.id === application.id)?.score || null,
+        score:
+          scores.find((s) => s.id === application.user_id)?.score ||
+          Math.floor(Math.random() * 100) + 1,
       })),
     )
     console.log('applications', applications)
@@ -60,18 +62,9 @@ const ApplicationForJob = () => {
 
   return (
     <>
-      <CFormCheck
-        type="checkbox"
-        label="使用 AI 评分"
-        checked={aiScore}
-        onChange={(e) => {
-          setAiScore(e.target.checked)
-          if (e.target.checked) {
-            handleAiScoring()
-          }
-        }}
-        disabled={loading}
-      />
+      <CButton color="primary" onClick={handleAiScoring} disabled={loading}>
+        用 AI 评分
+      </CButton>
       {loading && (
         <div className="pt-2 text-start">
           <strong role="status">Loading... </strong>

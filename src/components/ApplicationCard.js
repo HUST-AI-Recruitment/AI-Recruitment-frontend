@@ -50,6 +50,8 @@ const RecruiterCard = (props) => {
     4: '在校-可以到岗',
   }
 
+  console.log('recruiter card score', score)
+
   return (
     <>
       <CCardTitle>{resume.name}</CCardTitle>
@@ -120,6 +122,8 @@ const ApplicationCard = ({ application }) => {
     window.location.reload()
   }
 
+  console.log('application card score', score)
+
   return (
     <CCard
       key={id}
@@ -131,9 +135,9 @@ const ApplicationCard = ({ application }) => {
     >
       <CCardBody>
         {role === 1 ? (
-          <RecruiterCard user_id={user_id} progress={progress} />
+          <RecruiterCard user_id={user_id} progress={progress} score={score} />
         ) : (
-          <ApplicantCard job_id={job_id} progress={progress} score={score} />
+          <ApplicantCard job_id={job_id} progress={progress} />
         )}
         <CCardText as={'div'} style={{ marginBottom: '0.5rem' }}>
           进度：{progress2Info[progress]}
