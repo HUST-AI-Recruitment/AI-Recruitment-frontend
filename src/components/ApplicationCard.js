@@ -84,6 +84,7 @@ const ApplicationCard = ({ application }) => {
   const score = application.score
   const putUrl = `https://api.recruitment.kkkstra.cn/api/v1/applications/${id}`
   const role = useSelector((state) => state.authReducer.role)
+  const token = useSelector((state) => state.authReducer.token)
   const navigate = useNavigate()
   const progress2Color = {
     1: 'rgba(255, 215, 0, 0.8)',
@@ -109,6 +110,7 @@ const ApplicationCard = ({ application }) => {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token,
       },
       body: JSON.stringify({
         id: id,
