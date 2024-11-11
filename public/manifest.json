@@ -1,9 +1,9 @@
 {
-  "short_name": "CoreUI-React",
-  "name": "CoreUI-React sample",
+  "short_name": "职达 AI",
+  "name": "职达 AI",
   "icons": [
     {
-      "src": "./assets/img/favicon.png",
+      "src": "./favicon.png",
       "sizes": "100x100",
       "type": "image/png"
     }

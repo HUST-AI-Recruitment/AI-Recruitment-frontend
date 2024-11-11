@@ -31,7 +31,7 @@ const AppHeader = () => {
 
   const dispatch = useDispatch()
   const sidebarShow = useSelector((state) => state.changeState.sidebarShow)
-  // const sidebarUnfoldable = useSelector((state) => state.changeState.sidebarUnfoldable)
+  const sidebarUnfoldable = useSelector((state) => state.changeState.sidebarUnfoldable)
 
   const token = useSelector((state) => state.authReducer.token)
   const username = useSelector((state) => state.authReducer.username)
@@ -69,13 +69,17 @@ const AppHeader = () => {
     navigate(`/user/${userid}`)
   }
 
+  const handleToggleSidebar = () => {
+    dispatch({ type: 'setSidebarShow', sidebarShow: !sidebarShow })
+    if (sidebarUnfoldable) {
+      dispatch({ type: 'setSidebarUnfoldable', sidebarUnfoldable: false })
+    }
+  }
+
   return (
     <CHeader position="sticky" className="mb-4 p-0" ref={headerRef}>
       <CContainer className="border-bottom px-4" fluid>
-        <CHeaderToggler
-          onClick={() => dispatch({ type: 'setSidebarShow', sidebarShow: !sidebarShow })}
-          style={{ marginInlineStart: '-14px' }}
-        >
+        <CHeaderToggler onClick={handleToggleSidebar} style={{ marginInlineStart: '-14px' }}>
           <CIcon icon={cilMenu} size="lg" />
         </CHeaderToggler>
         <CHeaderNav className="ms-auto" style={{ visibility: 'hidden' }}></CHeaderNav>

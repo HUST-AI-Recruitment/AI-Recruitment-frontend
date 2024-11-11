@@ -61,15 +61,11 @@ const MyAppSidebar = () => {
       onMouseLeave={() => setNarrow(unfoldable)}
     >
       <CSidebarHeader className="border-bottom">
-        <CSidebarBrand to="/">
-          {/* <CIcon customClassName="sidebar-brand-full" icon={logo} height={32} /> */}
-          {/* <CIcon customClassName="sidebar-brand-narrow" icon={sygnet} height={32} /> */}
-          <div className="sidebar-brand-full" style={{ fontSize: '1.2rem' }}>
-            AI Recruitment
-          </div>
-          <div className="sidebar-brand-narrow" style={{ fontSize: '1.2rem' }}>
-            AI
-          </div>
+        <CSidebarBrand to="/" style={{ textDecoration: 'none' }}>
+          <strong className="sidebar-brand-full" style={{ fontSize: '1.2rem' }}>
+            职达 AI - AI 智能招聘平台
+          </strong>
+          <strong className="sidebar-brand-narrow">职达AI</strong>
         </CSidebarBrand>
         <CCloseButton
           className="d-lg-none"
