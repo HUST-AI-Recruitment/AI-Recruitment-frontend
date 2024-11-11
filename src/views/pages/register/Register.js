@@ -153,10 +153,12 @@ const Register = () => {
                       <CIcon icon={cilUser} />
                     </CInputGroupText>
                     <CFormInput
-                      feedbackInvalid="用户名长度应在2-255字符之间"
+                      feedbackInvalid="用户名长度应在 2-255 字符之间"
                       placeholder="用户名"
                       autoComplete="username"
                       onChange={(e) => setUsername(e.target.value)}
+                      minLength={2}
+                      maxLength={255}
                       required
                     />
                   </CInputGroup>
@@ -165,11 +167,13 @@ const Register = () => {
                       <CIcon icon={cilUser} />
                     </CInputGroupText>
                     <CFormInput
-                      feedbackInvalid="年龄大小应为0-150之间的整数"
+                      feedbackInvalid="年龄大小应为 0-150 之间的整数"
                       placeholder="年龄"
                       onChange={handleAgeChange}
                       inputMode="numeric"
                       type="number"
+                      min={0}
+                      max={150}
                       required
                     />
                   </CInputGroup>
@@ -195,6 +199,7 @@ const Register = () => {
                       placeholder="邮箱"
                       onChange={(e) => setEmail(e.target.value)}
                       required
+                      maxLength={255}
                       type="email"
                     />
                   </CInputGroup>
@@ -203,12 +208,13 @@ const Register = () => {
                       <CIcon icon={cilLockLocked} />
                     </CInputGroupText>
                     <CFormInput
-                      feedbackInvalid="密码长度应至少6位"
+                      feedbackInvalid="密码长度应至少 6 位"
                       type="password"
-                      minLength={6}
                       placeholder="密码"
                       autoComplete="new-password"
                       onChange={(e) => setPassword(e.target.value)}
+                      minLength={6}
+                      maxLength={255}
                       required
                     />
                   </CInputGroup>
@@ -219,10 +225,11 @@ const Register = () => {
                     <CFormInput
                       feedbackInvalid="请确认您的密码"
                       type="password"
-                      minLength={6}
                       placeholder="确认密码"
                       autoComplete="new-password"
                       onChange={(e) => setRepeatPassword(e.target.value)}
+                      minLength={6}
+                      maxLength={255}
                       required
                     />
                   </CInputGroup>

@@ -123,6 +123,9 @@ const Login = () => {
                         placeholder="用户名"
                         autoComplete="username"
                         onChange={(e) => setUsername(e.target.value)}
+                        minLength={2}
+                        maxLength={255}
+                        required
                       />
                     </CInputGroup>
                     <CInputGroup className="mb-4">
@@ -135,6 +138,9 @@ const Login = () => {
                         placeholder="密码"
                         autoComplete="current-password"
                         onChange={(e) => setPassword(e.target.value)}
+                        minLength={6}
+                        maxLength={255}
+                        required
                       />
                     </CInputGroup>
                     <CRow>

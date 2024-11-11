@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { CButton, CCol, CForm, CFormFeedback, CFormInput, CFormTextarea } from '@coreui/react'
+import { CButton, CCol, CForm, CFormInput, CFormTextarea } from '@coreui/react'
 import { useJob } from 'src/views/JobDetail'
 import { clearJob } from 'src/reducers/jobReducer'
 

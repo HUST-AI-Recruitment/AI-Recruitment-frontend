@@ -99,11 +99,13 @@ const Profile = () => {
       <CForm className="row g-3" noValidate validated={validated} onSubmit={handleSubmit}>
         <CCol md={6} className="mb-3">
           <CFormInput
-            feedbackInvalid="用户名长度应在2-255字符之间"
+            feedbackInvalid="用户名长度应在 2-255 字符之间"
             type="text"
             label="用户名"
             value={name}
             onChange={(e) => setName(e.target.value)}
+            minLength={2}
+            maxLength={255}
             required
             disabled={id !== userid}
           />
@@ -115,18 +117,21 @@ const Profile = () => {
             label="邮箱"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            maxLength={255}
             required
             disabled={id !== userid}
           />
         </CCol>
         <CCol md={6} className="mb-3">
           <CFormInput
-            feedbackInvalid="年龄应为0-150之间的整数"
+            feedbackInvalid="年龄应为 0-150 之间的整数"
             type="number"
             inputMode="numeric"
             label="年龄"
             value={age}
             onChange={(e) => setAge(parseInt(e.target.value))}
+            min={0}
+            max={150}
             required
             disabled={id !== userid}
           />
