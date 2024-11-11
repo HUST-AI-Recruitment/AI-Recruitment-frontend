@@ -142,8 +142,8 @@ const Profile = () => {
         </CCol>
         <CCol md={6} className="mb-3">
           <CFormSelect
-            feedbackInvalid="请选择您的教育情况"
-            label="教育情况"
+            feedbackInvalid="请选择您的教育经历"
+            label="教育经历"
             value={degree}
             onChange={(e) => {
               setDegree(e.target.value ? parseInt(e.target.value) : 0)
