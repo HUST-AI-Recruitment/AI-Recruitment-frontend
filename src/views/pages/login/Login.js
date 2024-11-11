@@ -35,7 +35,7 @@ const Login = () => {
   const handleLogin = async (event) => {
     event.preventDefault()
     if (!username || !password) {
-      setErrorMessages('Please fill in all fields')
+      setErrorMessages('请填写您的用户名密码进行登录')
       setTimeout(() => {
         setErrorMessages(null)
       }, countdown)
@@ -112,14 +112,15 @@ const Login = () => {
               <CCard className="p-4">
                 <CCardBody>
                   <CForm onSubmit={handleLogin}>
-                    <h1>Login</h1>
-                    <p className="text-body-secondary">Sign In to your account</p>
+                    <h1>登录</h1>
+                    <p className="text-body-secondary">登录您的账户</p>
                     <CInputGroup className="mb-3">
                       <CInputGroupText>
                         <CIcon icon={cilUser} />
                       </CInputGroupText>
                       <CFormInput
-                        placeholder="Username"
+                        feedbackInvalid="请填写正确的用户名"
+                        placeholder="用户名"
                         autoComplete="username"
                         onChange={(e) => setUsername(e.target.value)}
                       />
@@ -129,8 +130,9 @@ const Login = () => {
                         <CIcon icon={cilLockLocked} />
                       </CInputGroupText>
                       <CFormInput
+                        feedbackInvalid="密码错误"
                         type="password"
-                        placeholder="Password"
+                        placeholder="密码"
                         autoComplete="current-password"
                         onChange={(e) => setPassword(e.target.value)}
                       />
@@ -138,7 +140,7 @@ const Login = () => {
                     <CRow>
                       <CCol xs={6}>
                         <CButton color="primary" className="px-4" type="submit">
-                          Login
+                          登录
                         </CButton>
                       </CCol>
                       <CCol xs={6} className="text-right d-none">
@@ -153,14 +155,11 @@ const Login = () => {
               <CCard className="text-white bg-primary py-5" style={{ width: '44%' }}>
                 <CCardBody className="text-center">
                   <div>
-                    <h2>Sign up</h2>
-                    <p>
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                      tempor incididunt ut labore et dolore magna aliqua.
-                    </p>
+                    <h2>还没有账户？</h2>
+                    <p>若您在本站还没有账户，请点击下方按钮进行注册！</p>
                     <Link to="/register">
                       <CButton color="primary" className="mt-3" active tabIndex={-1}>
-                        Register Now!
+                        注册
                       </CButton>
                     </Link>
                   </div>

@@ -46,15 +46,15 @@ const Resume = () => {
   const disabled = userid !== id
 
   const key2Label = {
-    school: 'School',
-    major: 'Major',
-    degree: 'Degree',
-    start_time: 'Start Time',
-    end_time: 'End Time',
-    company: 'Company',
-    position: 'Position',
-    name: 'Name',
-    description: 'Description',
+    school: '学校',
+    major: '专业',
+    degree: '教育经历',
+    start_time: '开始时间',
+    end_time: '毕业时间',
+    company: '公司',
+    position: '地点',
+    name: '名称',
+    description: '描述',
   }
 
   console.log('Gender', gender)
@@ -262,8 +262,9 @@ const Resume = () => {
       <CForm className="row g-3" noValidate validated={validated} onSubmit={handleSubmit}>
         <CCol md={6}>
           <CFormInput
+            feedbackInvalid="请填写您的名字"
             type="text"
-            label="Name"
+            label="姓名"
             value={name}
             onChange={(e) => setName(e.target.value)}
             disabled={disabled}
@@ -273,8 +274,8 @@ const Resume = () => {
         </CCol>
         <CCol md={6}>
           <CFormSelect
-            feedbackInvalid="Please select gender."
-            label="Gender"
+            feedbackInvalid="请选择性别"
+            label="性别"
             value={gender}
             onChange={(e) => {
               if (e.target.value === '') setGender(0)
@@ -285,15 +286,16 @@ const Resume = () => {
             style={{ backgroundColor: 'white' }}
             required
           >
-            <option value="">Select Gender</option>
+            <option value="">请选择性别</option>
             <option value={1}>男</option>
             <option value={2}>女</option>
           </CFormSelect>
         </CCol>
         <CCol md={6}>
           <CFormInput
+            feedbackInvalid="请填写手机号"
             type="text"
-            label="Phone"
+            label="手机号"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
             disabled={disabled}
@@ -303,8 +305,9 @@ const Resume = () => {
         </CCol>
         <CCol md={6}>
           <CFormInput
+            feedbackInvalid="请填写邮箱"
             type="email"
-            label="Email"
+            label="邮箱"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             disabled={disabled}
@@ -314,8 +317,9 @@ const Resume = () => {
         </CCol>
         <CCol md={6}>
           <CFormInput
+            feedbackInvalid="请填写您的微信联系方式"
             type="text"
-            label="Wechat"
+            label="微信联系方式"
             value={wechat}
             onChange={(e) => setWechat(e.target.value)}
             disabled={disabled}
@@ -326,7 +330,7 @@ const Resume = () => {
         <CCol md={6}>
           <CFormSelect
             feedbackInvalid="请选择求职状态"
-            label="State"
+            label="求职状态"
             value={state}
             onChange={(e) => {
               if (e.target.value === '') setState(0)
@@ -346,8 +350,9 @@ const Resume = () => {
         </CCol>
         <CCol md={12}>
           <CFormTextarea
+            feedbackInvalid="请添加备注"
             type="text"
-            label="Description"
+            label="其他"
             style={{ height: '6em', backgroundColor: 'white' }}
             value={description}
             onChange={(e) => setDescription(e.target.value)}
@@ -355,7 +360,7 @@ const Resume = () => {
             required
           />
         </CCol>
-        <h5>Education</h5>
+        <h5>教育经历</h5>
         {!disabled && (
           <CCol md={12}>
             <CButton color="info" onClick={handleAddEducation} className="text-white">
@@ -407,7 +412,7 @@ const Resume = () => {
             ))}
           </CListGroup>
         </CCol>
-        <h5>Experience</h5>
+        <h5>工作经历</h5>
         {!disabled && (
           <CCol md={12}>
             <CButton color="info" className="text-white" onClick={handleAddExperience}>
@@ -456,7 +461,7 @@ const Resume = () => {
             ))}
           </CListGroup>
         </CCol>
-        <h5>Project</h5>
+        <h5>项目经历</h5>
         {!disabled && (
           <CCol md={12}>
             <CButton color="info" className="text-white" onClick={handleAddProject}>
@@ -508,7 +513,7 @@ const Resume = () => {
         {!disabled && (
           <div className="mt-3">
             <CButton type="submit" color="primary">
-              Submit
+              提交保存
             </CButton>
           </div>
         )}
@@ -524,6 +529,7 @@ const Resume = () => {
                 {key !== 'degree' ? (
                   <CFormInput
                     type={key === 'start_time' || key === 'end_time' ? 'date' : 'text'}
+                    feedbackInvalid={`请填写${key2Label[key]}`}
                     label={key2Label[key]}
                     value={key === 'start_time' || key === 'end_time' ? value.slice(0, 10) : value}
                     min={key === 'end_time' ? modalData['start_time'].slice(0, 10) : ''}
@@ -532,7 +538,7 @@ const Resume = () => {
                   />
                 ) : (
                   <CFormSelect
-                    feedbackInvalid="Please select degree."
+                    feedbackInvalid="请选择教育经历"
                     label={key2Label[key]}
                     value={value}
                     onChange={(e) => {
@@ -542,7 +548,7 @@ const Resume = () => {
                     }}
                     required
                   >
-                    <option value="">Select Degree</option>
+                    <option value="">选择学位</option>
                     <option value={1}>Bachelor</option>
                     <option value={2}>Master</option>
                     <option value={3}>PhD</option>

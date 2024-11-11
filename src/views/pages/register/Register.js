@@ -39,7 +39,7 @@ const Register = () => {
     const form = event.currentTarget
     if (form.checkValidity() === false) {
       event.stopPropagation()
-      setErrorMessages('Please fill in all fields')
+      setErrorMessages('请填写所有必填项')
       setValidated(true)
       setTimeout(() => {
         setErrorMessages(null)
@@ -115,8 +115,8 @@ const Register = () => {
             <CCard className="mx-4">
               <CCardBody className="p-4">
                 <CForm onSubmit={handleRegister} noValidate validated={validated}>
-                  <h1>Register</h1>
-                  <p className="text-body-secondary">Create your account</p>
+                  <h1>注册</h1>
+                  <p className="text-body-secondary">创建您的账户</p>
                   <div
                     style={{
                       display: 'flex',
@@ -153,7 +153,8 @@ const Register = () => {
                       <CIcon icon={cilUser} />
                     </CInputGroupText>
                     <CFormInput
-                      placeholder="Username"
+                      feedbackInvalid="用户名长度应在2-255字符之间"
+                      placeholder="用户名"
                       autoComplete="username"
                       onChange={(e) => setUsername(e.target.value)}
                       required
@@ -164,7 +165,8 @@ const Register = () => {
                       <CIcon icon={cilUser} />
                     </CInputGroupText>
                     <CFormInput
-                      placeholder="Age"
+                      feedbackInvalid="年龄大小应为0-150之间的整数"
+                      placeholder="年龄"
                       onChange={handleAgeChange}
                       inputMode="numeric"
                       type="number"
@@ -176,19 +178,21 @@ const Register = () => {
                       <CIcon icon={cilEducation} />
                     </CInputGroupText>
                     <CFormSelect
+                      feedbackInvalid="请选择教育情况"
                       onChange={(e) => setDegree(e.target.value ? parseInt(e.target.value) : 0)}
                       required
                     >
-                      <option value="">Degree</option>
-                      <option value="1">Bachelor</option>
-                      <option value="2">Master</option>
-                      <option value="3">PhD</option>
+                      <option value="">教育情况</option>
+                      <option value="1">本科</option>
+                      <option value="2">硕士</option>
+                      <option value="3">博士</option>
                     </CFormSelect>
                   </CInputGroup>
                   <CInputGroup className="mb-3">
                     <CInputGroupText>@</CInputGroupText>
                     <CFormInput
-                      placeholder="Email"
+                      feedbackInvalid="请填写正确的邮箱"
+                      placeholder="邮箱"
                       onChange={(e) => setEmail(e.target.value)}
                       required
                       type="email"
@@ -199,9 +203,10 @@ const Register = () => {
                       <CIcon icon={cilLockLocked} />
                     </CInputGroupText>
                     <CFormInput
+                      feedbackInvalid="密码长度应至少6位"
                       type="password"
                       minLength={6}
-                      placeholder="Password"
+                      placeholder="密码"
                       autoComplete="new-password"
                       onChange={(e) => setPassword(e.target.value)}
                       required
@@ -212,9 +217,10 @@ const Register = () => {
                       <CIcon icon={cilLockLocked} />
                     </CInputGroupText>
                     <CFormInput
+                      feedbackInvalid="请确认您的密码"
                       type="password"
                       minLength={6}
-                      placeholder="Repeat password"
+                      placeholder="确认密码"
                       autoComplete="new-password"
                       onChange={(e) => setRepeatPassword(e.target.value)}
                       required
@@ -222,7 +228,7 @@ const Register = () => {
                   </CInputGroup>
                   <div className="d-grid">
                     <CButton color="success" type="submit">
-                      Create Account
+                      创建
                     </CButton>
                   </div>
                 </CForm>

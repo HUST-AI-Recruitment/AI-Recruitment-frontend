@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { CButton, CCol, CForm, CFormInput, CFormTextarea } from '@coreui/react'
+import { CButton, CCol, CForm, CFormFeedback, CFormInput, CFormTextarea } from '@coreui/react'
 import { useJob } from 'src/views/JobDetail'
 import { clearJob } from 'src/reducers/jobReducer'
 
@@ -133,8 +133,9 @@ const JobPosting = () => {
       <CForm className="row g-3" noValidate validated={validated} onSubmit={handleSubmit}>
         <CCol md={6} className="mb-3">
           <CFormInput
+            feedbackInvalid="职务名称内容长度应在2-255字符之间"
             type="text"
-            floatingLabel="Title"
+            floatingLabel="职务名称"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             required
@@ -142,8 +143,9 @@ const JobPosting = () => {
         </CCol>
         <CCol md={6} className="mb-3">
           <CFormInput
+            feedbackInvalid="职务类型内容长度应在2-255字符之间"
             type="text"
-            floatingLabel="Job Type"
+            floatingLabel="职务类型"
             value={job_type}
             onChange={(e) => setJobType(e.target.value)}
             required
@@ -151,8 +153,9 @@ const JobPosting = () => {
         </CCol>
         <CCol md={6} className="mb-3">
           <CFormInput
+            feedbackInvalid="薪资情况内容长度应在2-255字符之间"
             type="text"
-            floatingLabel="Salary"
+            floatingLabel="薪资情况"
             value={salary}
             onChange={(e) => setSalary(e.target.value)}
             required
@@ -160,8 +163,9 @@ const JobPosting = () => {
         </CCol>
         <CCol md={6} className="mb-3">
           <CFormInput
+            feedbackInvalid="公司名称内容长度应在2-255字符之间"
             type="text"
-            floatingLabel="Company"
+            floatingLabel="公司名称"
             value={company}
             onChange={(e) => setCompany(e.target.value)}
             required
@@ -169,8 +173,9 @@ const JobPosting = () => {
         </CCol>
         <CCol md={6} className="mb-3">
           <CFormInput
+            feedbackInvalid="工作地点内容长度应在2-255字符之间"
             type="text"
-            floatingLabel="Location"
+            floatingLabel="工作地点"
             value={location}
             onChange={(e) => setLocation(e.target.value)}
             required
@@ -178,8 +183,9 @@ const JobPosting = () => {
         </CCol>
         <CCol md={12} className="mb-3">
           <CFormTextarea
+            feedbackInvalid="工作描述内容不能为空"
             type="text"
-            floatingLabel="Description"
+            floatingLabel="工作描述"
             style={{ height: '6em' }}
             value={description}
             onChange={(e) => setDescription(e.target.value)}
@@ -188,8 +194,9 @@ const JobPosting = () => {
         </CCol>
         <CCol md={12} className="mb-3">
           <CFormTextarea
+            feedbackInvalid="工作要求内容不能为空"
             type="text"
-            floatingLabel="Demand"
+            floatingLabel="工作要求"
             style={{ height: '8em' }}
             value={demand}
             onChange={(e) => setDemand(e.target.value)}
@@ -198,7 +205,7 @@ const JobPosting = () => {
         </CCol>
         <div className="mb-3">
           <CButton type="submit" color="primary">
-            Submit
+            {actionType === 'edit' ? '更新' : '新建'}
           </CButton>
         </div>
       </CForm>
