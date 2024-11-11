@@ -6,19 +6,19 @@ import { cilUser, cilNoteAdd, cilObjectGroup, cilListRich } from '@coreui/icons'
 const recruiterNavigation = (userid) => [
   {
     component: CNavItem,
-    name: 'Profile',
+    name: '个人信息',
     to: `/user/${userid}`,
     icon: <CIcon icon={cilUser} customClassName="nav-icon" />,
   },
   {
     component: CNavItem,
-    name: 'All Jobs',
+    name: '全部工作',
     to: '/all-jobs',
     icon: <CIcon icon={cilObjectGroup} customClassName="nav-icon" />,
   },
   {
     component: CNavItem,
-    name: 'Job Posting',
+    name: '发布工作',
     to: '/job-posting',
     icon: <CIcon icon={cilNoteAdd} customClassName="nav-icon" />,
   },
@@ -27,25 +27,25 @@ const recruiterNavigation = (userid) => [
 const candidateNavigation = (userid) => [
   {
     component: CNavItem,
-    name: 'Profile',
+    name: '个人信息',
     to: `/user/${userid}`,
     icon: <CIcon icon={cilUser} customClassName="nav-icon" />,
   },
   {
     component: CNavItem,
-    name: 'All Jobs',
+    name: '全部工作',
     to: '/all-jobs',
     icon: <CIcon icon={cilObjectGroup} customClassName="nav-icon" />,
   },
   {
     component: CNavItem,
-    name: 'Resume',
+    name: '个人简历',
     to: `/resume/${userid}`,
     icon: <CIcon icon={cilNoteAdd} customClassName="nav-icon" />,
   },
   {
     component: CNavItem,
-    name: 'My Application',
+    name: '我的申请',
     to: '/application',
     icon: <CIcon icon={cilListRich} customClassName="nav-icon" />,
   },

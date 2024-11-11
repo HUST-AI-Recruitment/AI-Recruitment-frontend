@@ -78,7 +78,7 @@ const MyAppSidebar = () => {
           <CNavItem as="div">
             <CNavLink as="div" href="#" onClick={handleLogout} style={{ cursor: 'pointer' }}>
               <CIcon icon={cilAccountLogout} customClassName="nav-icon" />
-              <div style={{ visibility: narrow ? 'hidden' : 'visible' }}>Logout</div>
+              <div style={{ visibility: narrow ? 'hidden' : 'visible' }}>登出</div>
             </CNavLink>
           </CNavItem>
         </div>
