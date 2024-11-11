@@ -63,9 +63,9 @@ const MyAppSidebar = () => {
       <CSidebarHeader className="border-bottom">
         <CSidebarBrand to="/" style={{ textDecoration: 'none' }}>
           <strong className="sidebar-brand-full" style={{ fontSize: '1.2rem' }}>
-            职达 AI - AI 智能招聘平台
+            AI 职达 - AI 智能招聘平台
           </strong>
-          <strong className="sidebar-brand-narrow">职达AI</strong>
+          <strong className="sidebar-brand-narrow">AI职达</strong>
         </CSidebarBrand>
         <CCloseButton
           className="d-lg-none"
