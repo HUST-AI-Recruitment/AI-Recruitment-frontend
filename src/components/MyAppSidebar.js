@@ -74,7 +74,7 @@ const MyAppSidebar = () => {
         />
       </CSidebarHeader>
       <AppSidebarNav items={role === 1 ? recruiterNavigation(userid) : candidateNavigation(userid)}>
-        <div style={{ position: 'absolute', bottom: 0, width: '100%' }}>
+        <div style={{ marginTop: 'auto', width: '100%' }}>
           <CNavItem as="div">
             <CNavLink as="div" href="#" onClick={handleLogout} style={{ cursor: 'pointer' }}>
               <CIcon icon={cilAccountLogout} customClassName="nav-icon" />

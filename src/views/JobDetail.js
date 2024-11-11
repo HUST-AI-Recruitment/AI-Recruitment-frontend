@@ -109,6 +109,15 @@ const JobDetail = () => {
     if (response.ok) {
       alert('工作申请成功')
       navigate('/all-jobs')
+    } else {
+      const data = await response.json()
+      console.log(data)
+      if (data['msg'] === 'resume does not exist') {
+        alert('简历不存在，请先创建简历')
+        navigate(`/resume/${userid}`)
+      } else if (data['msg'] === 'application already exists') {
+        alert('您已经申请过该工作了')
+      }
     }
   }
 
