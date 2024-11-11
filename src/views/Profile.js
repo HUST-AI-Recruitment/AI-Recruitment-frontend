@@ -108,8 +108,9 @@ const Profile = () => {
       <CForm className="row g-3" noValidate validated={validated} onSubmit={handleSubmit}>
         <CCol md={6} className="mb-3">
           <CFormInput
+            feedbackInvalid="用户名长度应在2-255字符之间"
             type="text"
-            label="Username"
+            label="用户名"
             value={name}
             onChange={(e) => setName(e.target.value)}
             required
@@ -118,8 +119,9 @@ const Profile = () => {
         </CCol>
         <CCol md={6} className="mb-3">
           <CFormInput
+            feedbackInvalid="请输入正确的邮箱"
             type="email"
-            label="Email"
+            label="邮箱"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
@@ -128,9 +130,10 @@ const Profile = () => {
         </CCol>
         <CCol md={6} className="mb-3">
           <CFormInput
+            feedbackInvalid="年龄应为0-150之间的整数"
             type="number"
             inputMode="numeric"
-            label="Age"
+            label="年龄"
             value={age}
             onChange={(e) => setAge(parseInt(e.target.value))}
             required
@@ -139,8 +142,8 @@ const Profile = () => {
         </CCol>
         <CCol md={6} className="mb-3">
           <CFormSelect
-            feedbackInvalid="Please select a degree."
-            label="Degree"
+            feedbackInvalid="请选择您的教育情况"
+            label="教育情况"
             value={degree}
             onChange={(e) => {
               setDegree(e.target.value ? parseInt(e.target.value) : 0)
@@ -158,7 +161,7 @@ const Profile = () => {
         {id === userid && (
           <div className="mb-3">
             <CButton type="submit" color="primary">
-              Save
+              保存
             </CButton>
           </div>
         )}
