@@ -6,6 +6,7 @@ const initialState = {
   sidebarShow: true,
   sidebarUnfoldable: false,
   theme: 'light',
+  seeMyOwnJobs: false,
 }
 
 const changeState = (state = initialState, { type, ...rest }) => {
@@ -16,6 +17,8 @@ const changeState = (state = initialState, { type, ...rest }) => {
       return { ...state, sidebarShow: rest.sidebarShow }
     case 'setSidebarUnfoldable':
       return { ...state, sidebarUnfoldable: rest.sidebarUnfoldable }
+    case 'setSeeMyOwnJobs':
+      return { ...state, seeMyOwnJobs: rest.seeMyOwnJobs }
     default:
       return state
   }

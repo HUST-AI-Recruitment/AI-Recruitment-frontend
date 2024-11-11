@@ -15,7 +15,7 @@ import {
   CSpinner,
 } from '@coreui/react'
 import { useEffect } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import CIcon from '@coreui/icons-react'
 import { cilSearch } from '@coreui/icons'
@@ -23,7 +23,7 @@ import { cilSearch } from '@coreui/icons'
 const AllJobs = () => {
   const [jobs, setJobs] = React.useState([])
   const [allJobs, setAllJobs] = React.useState([])
-  const [own, setOwn] = React.useState(false)
+  const own = useSelector((state) => state.changeState.seeMyOwnJobs)
   const getUrl = 'https://api.recruitment.kkkstra.cn/api/v1/jobs?own=' + own
   const recommendUrl = 'https://api.recruitment.kkkstra.cn/api/v1/recommend/jobs'
   const token = useSelector((state) => state.authReducer.token)
@@ -33,6 +33,7 @@ const AllJobs = () => {
   const [searchText, setSearchText] = React.useState('')
   const [loading, setLoading] = React.useState(false)
   const userid = useSelector((state) => state.authReducer.userid)
+  const dispatch = useDispatch()
 
   useEffect(() => {
     const fetchData = async () => {
@@ -104,7 +105,7 @@ const AllJobs = () => {
           id="own"
           label="只看我创建的"
           checked={own}
-          onChange={(e) => setOwn(e.target.checked)}
+          onChange={(e) => dispatch({ type: 'setSeeMyOwnJobs', seeMyOwnJobs: e.target.checked })}
         />
       )}
       {role === 2 && (

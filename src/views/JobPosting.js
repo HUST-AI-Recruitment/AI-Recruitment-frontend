@@ -130,80 +130,93 @@ const JobPosting = () => {
 
   return (
     <>
-      <CForm className="row g-3" noValidate validated={validated} onSubmit={handleSubmit}>
-        <CCol md={6} className="mb-3">
+      <h3>{actionType === 'edit' ? '编辑工作' : '发布工作'}</h3>
+      <CForm className="row g-3 mt-2" noValidate validated={validated} onSubmit={handleSubmit}>
+        <CCol md={6} className="mb-1">
           <CFormInput
-            feedbackInvalid="职务名称内容长度应在2-255字符之间"
+            feedbackInvalid="职务名称内容长度应在 2-255 字符之间"
             type="text"
             floatingLabel="职务名称"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
+            minLength={2}
+            maxLength={255}
             required
           />
         </CCol>
-        <CCol md={6} className="mb-3">
+        <CCol md={6} className="mb-1">
           <CFormInput
-            feedbackInvalid="职务类型内容长度应在2-255字符之间"
+            feedbackInvalid="职务类型内容长度应在 2-255 字符之间"
             type="text"
             floatingLabel="职务类型"
             value={job_type}
             onChange={(e) => setJobType(e.target.value)}
+            minLength={2}
+            maxLength={255}
             required
           />
         </CCol>
-        <CCol md={6} className="mb-3">
+        <CCol md={6} className="mb-1">
           <CFormInput
-            feedbackInvalid="薪资情况内容长度应在2-255字符之间"
+            feedbackInvalid="薪资情况内容长度应在 2-255 字符之间"
             type="text"
             floatingLabel="薪资情况"
             value={salary}
             onChange={(e) => setSalary(e.target.value)}
+            minLength={2}
+            maxLength={255}
             required
           />
         </CCol>
-        <CCol md={6} className="mb-3">
+        <CCol md={6} className="mb-1">
           <CFormInput
-            feedbackInvalid="公司名称内容长度应在2-255字符之间"
+            feedbackInvalid="公司名称内容长度应在 2-255 字符之间"
             type="text"
             floatingLabel="公司名称"
             value={company}
             onChange={(e) => setCompany(e.target.value)}
+            minLength={2}
+            maxLength={255}
             required
           />
         </CCol>
-        <CCol md={6} className="mb-3">
+        <CCol md={6} className="mb-1">
           <CFormInput
-            feedbackInvalid="工作地点内容长度应在2-255字符之间"
+            feedbackInvalid="工作地点内容长度应在 2-255 字符之间"
             type="text"
             floatingLabel="工作地点"
             value={location}
             onChange={(e) => setLocation(e.target.value)}
+            minLength={2}
+            maxLength={255}
             required
           />
         </CCol>
-        <CCol md={12} className="mb-3">
+        <CCol md={12} className="mb-1">
           <CFormTextarea
-            feedbackInvalid="工作描述内容不能为空"
+            feedbackInvalid="工作描述内容长度最小为 2"
             type="text"
             floatingLabel="工作描述"
             style={{ height: '6em' }}
             value={description}
             onChange={(e) => setDescription(e.target.value)}
+            minLength={2}
             required
           />
         </CCol>
-        <CCol md={12} className="mb-3">
+        <CCol md={12} className="mb-1">
           <CFormTextarea
-            feedbackInvalid="工作要求内容不能为空"
+            feedbackInvalid="工作要求内容长度最小为 2"
             type="text"
             floatingLabel="工作要求"
             style={{ height: '8em' }}
             value={demand}
             onChange={(e) => setDemand(e.target.value)}
+            minLength={2}
             required
           />
         </CCol>
-        <div className="mb-3">
+        <div className="mb-1">
           <CButton type="submit" color="primary">
             {actionType === 'edit' ? '更新' : '新建'}
           </CButton>
