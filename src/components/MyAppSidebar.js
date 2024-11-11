@@ -2,10 +2,7 @@ import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
 import {
-  CButton,
   CCloseButton,
-  CContainer,
-  CNavbar,
   CNavLink,
   CSidebar,
   CSidebarBrand,
@@ -17,8 +14,6 @@ import CIcon from '@coreui/icons-react'
 
 import { AppSidebarNav } from 'src/components/AppSidebarNav'
 
-import { logo } from 'src/assets/brand/logo'
-import { sygnet } from 'src/assets/brand/sygnet'
 import { cilAccountLogout } from '@coreui/icons'
 import { CNavItem } from '@coreui/react'
 
@@ -47,6 +42,9 @@ const MyAppSidebar = () => {
     navigate('/home')
   }
 
+  const [narrow, setNarrow] = React.useState(unfoldable)
+  console.log('narrow', narrow)
+
   const userid = useSelector((state) => state.authReducer.userid)
 
   return (
@@ -59,6 +57,8 @@ const MyAppSidebar = () => {
       onVisibleChange={(visible) => {
         dispatch({ type: 'setSidebarShow', sidebarShow: visible })
       }}
+      onMouseOver={() => setNarrow(false)}
+      onMouseLeave={() => setNarrow(unfoldable)}
     >
       <CSidebarHeader className="border-bottom">
         <CSidebarBrand to="/">
@@ -80,9 +80,9 @@ const MyAppSidebar = () => {
       <AppSidebarNav items={role === 1 ? recruiterNavigation(userid) : candidateNavigation(userid)}>
         <div style={{ position: 'absolute', bottom: 0, width: '100%' }}>
           <CNavItem as="div">
-            <CNavLink as="div" onClick={handleLogout} style={{ cursor: 'pointer' }}>
+            <CNavLink as="div" href="#" onClick={handleLogout} style={{ cursor: 'pointer' }}>
               <CIcon icon={cilAccountLogout} customClassName="nav-icon" />
-              Logout
+              <div style={{ visibility: narrow ? 'hidden' : 'visible' }}>Logout</div>
             </CNavLink>
           </CNavItem>
         </div>
