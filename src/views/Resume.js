@@ -529,6 +529,7 @@ const Resume = () => {
                 {key !== 'degree' ? (
                   <CFormInput
                     type={key === 'start_time' || key === 'end_time' ? 'date' : 'text'}
+                    feedbackInvalid={`请填写${key2Label[key]}`}
                     label={key2Label[key]}
                     value={key === 'start_time' || key === 'end_time' ? value.slice(0, 10) : value}
                     min={key === 'end_time' ? modalData['start_time'].slice(0, 10) : ''}
