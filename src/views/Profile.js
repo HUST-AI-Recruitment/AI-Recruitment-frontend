@@ -108,6 +108,7 @@ const Profile = () => {
             maxLength={255}
             required
             disabled={id !== userid}
+            style={{ backgroundColor: 'white' }}
           />
         </CCol>
         <CCol md={6} className="mb-3">
@@ -120,6 +121,7 @@ const Profile = () => {
             maxLength={255}
             required
             disabled={id !== userid}
+            style={{ backgroundColor: 'white' }}
           />
         </CCol>
         <CCol md={6} className="mb-3">
@@ -134,6 +136,7 @@ const Profile = () => {
             max={150}
             required
             disabled={id !== userid}
+            style={{ backgroundColor: 'white' }}
           />
         </CCol>
         <CCol md={6} className="mb-3">
@@ -147,6 +150,7 @@ const Profile = () => {
             }}
             required
             disabled={id !== userid}
+            style={{ backgroundColor: 'white' }}
           >
             <option value="">选择学位</option>
             <option value={1}>学士</option>
