@@ -59,35 +59,27 @@ const AllJobs = () => {
     navigate(`/job/${jobId}`)
   }
 
-  const handleRecommendSubmit = async () => {
+  const handleRecommendSubmit = async (type) => {
     setLoading(true)
-    console.log('recommendBy', recommendBy)
     const response = await fetch(recommendUrl, {
-      method: recommendBy === 2 ? 'POST' : 'GET',
+      method: type === 2 ? 'POST' : 'GET',
       headers: {
         Authorization: 'Bearer ' + token,
         'Content-Type': 'application/json',
       },
-      body: recommendBy === 2 ? JSON.stringify({ description: searchText }) : null,
+      body: type === 2 ? JSON.stringify({ description: searchText }) : null,
     })
     const data = await response.json()
     if (!response.ok) {
       setLoading(false)
-      console.log('get recommend jobs failed')
-      console.log('response', response)
       if (data['msg'] === 'get resume list failed') {
         alert('请先填写简历')
         navigate(`/resume/${userid}`)
       }
       return
     } else {
-      console.log('data', data)
-      console.log('data[data]', data['data'])
-      console.log('data[data][jobs]', data['data']['jobs'])
       const jobIds = data['data']['jobs'] || []
-      console.log('jobIds', jobIds)
       const recommendJobs = jobIds.map((jobId) => allJobs.find((job) => job.id === jobId))
-      console.log('recommendJobs', recommendJobs)
       setJobs(recommendJobs)
       setLoading(false)
     }
@@ -134,9 +126,7 @@ const AllJobs = () => {
             onChange={(e) => {
               setRecommendBy(parseInt(e.target.value))
               setSearchText('')
-              e.preventDefault()
-              e.stopPropagation()
-              handleRecommendSubmit()
+              handleRecommendSubmit(1)
             }}
             inline
             disabled={loading}
@@ -154,7 +144,7 @@ const AllJobs = () => {
             <CForm
               onSubmit={(e) => {
                 e.preventDefault()
-                handleRecommendSubmit()
+                handleRecommendSubmit(2)
               }}
             >
               <CInputGroup className="mt-2">
@@ -174,9 +164,13 @@ const AllJobs = () => {
         </CCol>
       )}
       {loading && (
-        <div className="pt-2 text-start">
-          <strong role="status">Loading... </strong>
-          <CSpinner className="ms-auto" />
+        <div className="pt-2 text-start d-flex align-items-center justify-content-flex-start">
+          <span style={{ marginRight: 4 }}>
+            <strong role="status">AI 推荐中……</strong>
+          </span>
+          <span>
+            <CSpinner className="ms-auto" />
+          </span>
         </div>
       )}
       <CRow className="pt-3" xs={{ cols: 'auto' }}>
