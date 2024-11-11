@@ -80,11 +80,9 @@ const MyAppSidebar = () => {
       <AppSidebarNav items={role === 1 ? recruiterNavigation(userid) : candidateNavigation(userid)}>
         <div style={{ position: 'absolute', bottom: 0, width: '100%' }}>
           <CNavItem as="div">
-            <CNavLink>
+            <CNavLink as="div" onClick={handleLogout} style={{ cursor: 'pointer' }}>
               <CIcon icon={cilAccountLogout} customClassName="nav-icon" />
-              <CButton onClick={handleLogout} style={{ margin: '4px', padding: 0 }}>
-                Logout
-              </CButton>
+              Logout
             </CNavLink>
           </CNavItem>
         </div>
