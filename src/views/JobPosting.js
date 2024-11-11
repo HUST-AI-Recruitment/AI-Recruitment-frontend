@@ -133,7 +133,7 @@ const JobPosting = () => {
       <CForm className="row g-3" noValidate validated={validated} onSubmit={handleSubmit}>
         <CCol md={6} className="mb-3">
           <CFormInput
-            feedbackInvalid="职务名称不能为空"
+            feedbackInvalid="职务名称内容长度应在2-255字符之间"
             type="text"
             floatingLabel="职务名称"
             value={title}
@@ -143,7 +143,7 @@ const JobPosting = () => {
         </CCol>
         <CCol md={6} className="mb-3">
           <CFormInput
-            feedbackInvalid="职务类型不能为空"
+            feedbackInvalid="职务类型内容长度应在2-255字符之间"
             type="text"
             floatingLabel="职务类型"
             value={job_type}
@@ -153,7 +153,7 @@ const JobPosting = () => {
         </CCol>
         <CCol md={6} className="mb-3">
           <CFormInput
-            feedbackInvalid="薪资情况不能为空"
+            feedbackInvalid="薪资情况内容长度应在2-255字符之间"
             type="text"
             floatingLabel="薪资情况"
             value={salary}
@@ -163,7 +163,7 @@ const JobPosting = () => {
         </CCol>
         <CCol md={6} className="mb-3">
           <CFormInput
-            feedbackInvalid="公司名称不能为空"
+            feedbackInvalid="公司名称内容长度应在2-255字符之间"
             type="text"
             floatingLabel="公司名称"
             value={company}
@@ -173,7 +173,7 @@ const JobPosting = () => {
         </CCol>
         <CCol md={6} className="mb-3">
           <CFormInput
-            feedbackInvalid="工作地点不能为空"
+            feedbackInvalid="工作地点内容长度应在2-255字符之间"
             type="text"
             floatingLabel="工作地点"
             value={location}
@@ -183,7 +183,7 @@ const JobPosting = () => {
         </CCol>
         <CCol md={12} className="mb-3">
           <CFormTextarea
-            feedbackInvalid="工作描述不能为空"
+            feedbackInvalid="工作描述内容不能为空"
             type="text"
             floatingLabel="工作描述"
             style={{ height: '6em' }}
@@ -194,7 +194,7 @@ const JobPosting = () => {
         </CCol>
         <CCol md={12} className="mb-3">
           <CFormTextarea
-            feedbackInvalid="工作要求不能为空"
+            feedbackInvalid="工作要求内容不能为空"
             type="text"
             floatingLabel="工作要求"
             style={{ height: '8em' }}
