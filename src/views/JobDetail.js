@@ -39,7 +39,7 @@ const useJob = (id) => {
         },
       })
       if (!response.ok) {
-        console.log('get job failed')
+        console.log('获取工作信息失败')
         return
       }
       const data = await response.json()
@@ -88,7 +88,7 @@ const JobDetail = () => {
       },
     })
     if (response.ok) {
-      alert('Job posting deleted successfully')
+      alert('成功删除工作')
       navigate('/all-jobs')
     }
   }
@@ -107,7 +107,7 @@ const JobDetail = () => {
       }),
     })
     if (response.ok) {
-      alert('Job application submitted successfully')
+      alert('工作申请成功')
       navigate('/all-jobs')
     }
   }

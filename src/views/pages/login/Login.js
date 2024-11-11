@@ -145,7 +145,7 @@ const Login = () => {
                       </CCol>
                       <CCol xs={6} className="text-right d-none">
                         <CButton color="link" className="px-0">
-                          Forgot password?
+                          忘记密码？
                         </CButton>
                       </CCol>
                     </CRow>

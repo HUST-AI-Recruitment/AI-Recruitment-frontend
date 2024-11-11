@@ -66,9 +66,13 @@ const ApplicationForJob = () => {
         用 AI 评分
       </CButton>
       {loading && (
-        <div className="pt-2 text-start">
-          <strong role="status">Loading... </strong>
-          <CSpinner className="ms-auto" />
+        <div className="pt-2 text-start d-flex align-items-center justify-content-flex-start">
+          <span style={{ marginRight: 4 }}>
+            <strong role="status">AI 打分中……</strong>
+          </span>
+          <span>
+            <CSpinner className="ms-auto" />
+          </span>
         </div>
       )}
       <CRow className="pt-3" xs={{ cols: 'auto' }}>

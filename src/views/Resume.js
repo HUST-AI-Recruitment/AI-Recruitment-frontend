@@ -48,7 +48,7 @@ const Resume = () => {
   const key2Label = {
     school: '学校',
     major: '专业',
-    degree: '教育经历',
+    degree: '学位',
     start_time: '开始时间',
     end_time: '毕业时间',
     company: '公司',
@@ -132,9 +132,9 @@ const Resume = () => {
       body: JSON.stringify(data),
     })
     if (response.ok) {
-      isGet ? alert('Resume created successfully') : alert('Resume updated successfully')
+      isGet ? alert('简历创建成功') : alert('简历更新成功')
     } else {
-      isGet ? alert('Resume creation failed') : alert('Resume update failed')
+      isGet ? alert('简历创建失败') : alert('简历更新失败')
     }
   }
 
@@ -374,19 +374,19 @@ const Resume = () => {
               <CListGroupItem key={index}>
                 <CRow className="d-flex align-items-center">
                   <CCol md={4} className="my-1">
-                    <strong>School:</strong> {edu.school}
+                    <strong>学校：</strong> {edu.school}
                   </CCol>
                   <CCol md={4} className="my-1">
-                    <strong>Major:</strong> {edu.major}
+                    <strong>专业：</strong> {edu.major}
                   </CCol>
                   <CCol md={4} className="my-1">
-                    <strong>Degree:</strong> {['Bachelor', 'Master', 'PhD'][edu.degree - 1]}
+                    <strong>学位：</strong> {['学士', '硕士', '博士'][edu.degree - 1]}
                   </CCol>
                   <CCol md={4}>
-                    <strong>Start Time:</strong> {new Date(edu.start_time).toLocaleDateString()}
+                    <strong>开始时间：</strong> {new Date(edu.start_time).toLocaleDateString()}
                   </CCol>
                   <CCol md={4}>
-                    <strong>End Time:</strong> {new Date(edu.end_time).toLocaleDateString()}
+                    <strong>结束时间：</strong> {new Date(edu.end_time).toLocaleDateString()}
                   </CCol>
                   {!disabled && (
                     <CCol md={4} className="text-end">
@@ -426,16 +426,16 @@ const Resume = () => {
               <CListGroupItem key={index}>
                 <CRow className="d-flex align-items-center">
                   <CCol md={4} className="my-1">
-                    <strong>Company:</strong> {exp.company}
+                    <strong>公司名称：</strong> {exp.company}
                   </CCol>
                   <CCol md={8} className="my-1">
-                    <strong>Position:</strong> {exp.position}
+                    <strong>职位：</strong> {exp.position}
                   </CCol>
                   <CCol md={4} className="my-1">
-                    <strong>Start Time:</strong> {new Date(exp.start_time).toLocaleDateString()}
+                    <strong>开始时间：</strong> {new Date(exp.start_time).toLocaleDateString()}
                   </CCol>
                   <CCol md={4} className="my-1">
-                    <strong>End Time:</strong> {new Date(exp.end_time).toLocaleDateString()}
+                    <strong>结束时间：</strong> {new Date(exp.end_time).toLocaleDateString()}
                   </CCol>
                   {!disabled && (
                     <CCol md={4} className="text-end">
@@ -475,16 +475,16 @@ const Resume = () => {
               <CListGroupItem key={index}>
                 <CRow className="d-flex align-items-center">
                   <CCol md={4} className="my-1">
-                    <strong>Name:</strong> {project.name}
+                    <strong>项目名称：</strong> {project.name}
                   </CCol>
                   <CCol md={8} className="my-1">
-                    <strong>Description:</strong> {project.description}
+                    <strong>项目描述：</strong> {project.description}
                   </CCol>
                   <CCol md={4} className="my-1">
-                    <strong>Start Time:</strong> {new Date(project.start_time).toLocaleDateString()}
+                    <strong>开始时间：</strong> {new Date(project.start_time).toLocaleDateString()}
                   </CCol>
                   <CCol md={4} className="my-1">
-                    <strong>End Time:</strong> {new Date(project.end_time).toLocaleDateString()}
+                    <strong>结束时间：</strong> {new Date(project.end_time).toLocaleDateString()}
                   </CCol>
                   {!disabled && (
                     <CCol md={4} className="text-end">
@@ -549,9 +549,9 @@ const Resume = () => {
                     required
                   >
                     <option value="">选择学位</option>
-                    <option value={1}>Bachelor</option>
-                    <option value={2}>Master</option>
-                    <option value={3}>PhD</option>
+                    <option value={1}>学士</option>
+                    <option value={2}>硕士</option>
+                    <option value={3}>博士</option>
                   </CFormSelect>
                 )}
               </CCol>
@@ -560,10 +560,10 @@ const Resume = () => {
         </CModalBody>
         <CModalFooter>
           <CButton color="primary" form="modal-form" type="submit">
-            Save
+            保存
           </CButton>
           <CButton color="secondary" onClick={() => setIsModalOpen(false)}>
-            Cancel
+            取消
           </CButton>
         </CModalFooter>
       </CModal>

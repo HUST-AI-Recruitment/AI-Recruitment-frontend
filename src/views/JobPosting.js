@@ -16,7 +16,7 @@ const JobPosting = () => {
 
   useEffect(() => {
     if (role !== 1) {
-      alert('You are not authorized to view this page')
+      alert('你没有权限访问此页面')
       navigate(-1)
     }
   }, [role, navigate])
@@ -73,7 +73,7 @@ const JobPosting = () => {
       }),
     })
     if (response.ok) {
-      alert('Job posting created successfully')
+      alert('工作发布成功')
       setTitle('')
       setDescription('')
       setDemand('')
@@ -82,7 +82,7 @@ const JobPosting = () => {
       setSalary('')
       setJobType('')
     } else {
-      alert('Job posting creation failed')
+      alert('工作发布失败')
     }
   }
 
@@ -105,7 +105,7 @@ const JobPosting = () => {
       }),
     })
     if (response.ok) {
-      alert('Job posting updated successfully')
+      alert('工作更新成功')
       const id = jobID
       dispatch(clearJob())
       navigate(`/job/${id}`)

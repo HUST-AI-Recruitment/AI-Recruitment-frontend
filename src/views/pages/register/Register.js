@@ -47,7 +47,7 @@ const Register = () => {
       return
     }
     if (password !== repeatPassword) {
-      setErrorMessages('Password and repeat password not match')
+      setErrorMessages('两次密码不一致')
       setTimeout(() => {
         setErrorMessages(null)
       }, countdown)
@@ -68,10 +68,10 @@ const Register = () => {
       })
       console.log(response)
       if (response.ok) {
-        alert('Register success')
+        alert('注册成功')
         navigate('/login')
       } else {
-        alert('Register failed')
+        alert('注册失败')
       }
     } catch (error) {
       console.error(error)
@@ -183,7 +183,7 @@ const Register = () => {
                       required
                     >
                       <option value="">教育情况</option>
-                      <option value="1">本科</option>
+                      <option value="1">学士</option>
                       <option value="2">硕士</option>
                       <option value="3">博士</option>
                     </CFormSelect>

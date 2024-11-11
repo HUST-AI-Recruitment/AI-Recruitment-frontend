@@ -1,14 +1,5 @@
 import React, { useEffect } from 'react'
-import {
-  CButton,
-  CForm,
-  CFormCheck,
-  CFormInput,
-  CFormSelect,
-  CFormTextarea,
-  CCol,
-  CCardTitle,
-} from '@coreui/react'
+import { CButton, CForm, CFormInput, CFormSelect, CCol } from '@coreui/react'
 import { useSelector, useDispatch } from 'react-redux'
 import { setUsername } from 'src/reducers/authReducer'
 import { useParams } from 'react-router-dom'
@@ -32,9 +23,9 @@ const Profile = () => {
 
   const [name, setName] = React.useState('')
   const [email, setEmail] = React.useState('')
-  const [oldPassword, setOldPassword] = React.useState('')
-  const [newPassword, setNewPassword] = React.useState('')
-  const [repeatPassword, setRepeatPassword] = React.useState('')
+  // const [oldPassword, setOldPassword] = React.useState('')
+  // const [newPassword, setNewPassword] = React.useState('')
+  // const [repeatPassword, setRepeatPassword] = React.useState('')
   const [age, setAge] = React.useState('')
   const [degree, setDegree] = React.useState(0)
 
@@ -83,9 +74,9 @@ const Profile = () => {
       }),
     })
     if (response.ok) {
-      alert('Profile updated')
+      alert('信息更新成功')
     } else {
-      alert('Profile update failed')
+      alert('信息更新失败')
     }
   }
 
@@ -97,9 +88,9 @@ const Profile = () => {
   //     },
   //   })
   //   if (response.ok) {
-  //     alert('Account deleted')
+  //     alert('账户删除成功')
   //   } else {
-  //     alert('Account deletion failed')
+  //     alert('账户删除失败')
   //   }
   // }
 
@@ -142,8 +133,8 @@ const Profile = () => {
         </CCol>
         <CCol md={6} className="mb-3">
           <CFormSelect
-            feedbackInvalid="请选择您的教育经历"
-            label="教育经历"
+            feedbackInvalid="请选择您的学位"
+            label="学位"
             value={degree}
             onChange={(e) => {
               setDegree(e.target.value ? parseInt(e.target.value) : 0)
@@ -152,10 +143,10 @@ const Profile = () => {
             required
             disabled={id !== userid}
           >
-            <option value="">Select a degree</option>
-            <option value={1}>Bachelor</option>
-            <option value={2}>Master</option>
-            <option value={3}>PhD</option>
+            <option value="">选择学位</option>
+            <option value={1}>学士</option>
+            <option value={2}>硕士</option>
+            <option value={3}>博士</option>
           </CFormSelect>
         </CCol>
         {id === userid && (
@@ -170,7 +161,7 @@ const Profile = () => {
         <>
           <hr />
           <CButton color="danger" onClick={handleDelete}>
-            Delete Account
+            删除账户
           </CButton>
         </>
       )} */}

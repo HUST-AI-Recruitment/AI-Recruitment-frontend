@@ -102,7 +102,7 @@ const AllJobs = () => {
         <CFormCheck
           type="checkbox"
           id="own"
-          label="Only show my jobs"
+          label="只看我创建的"
           checked={own}
           onChange={(e) => setOwn(e.target.checked)}
         />
