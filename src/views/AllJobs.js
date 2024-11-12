@@ -177,7 +177,7 @@ const AllJobs = () => {
       <CRow className="pt-3" xs={{ cols: 'auto' }}>
         {jobs.map((job, index) => (
           <CCol key={index}>
-            <CCard key={job.id} style={{ marginBottom: '1rem', minWidth: '14rem' }}>
+            <CCard key={job.id} style={{ marginBottom: '1rem', minWidth: '16rem' }}>
               <CCardBody>
                 <CCardTitle>{job.title}</CCardTitle>
                 <CCardText as={'div'} style={{ marginBottom: '0.5rem' }}>
