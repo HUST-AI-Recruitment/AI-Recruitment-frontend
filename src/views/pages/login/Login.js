@@ -158,17 +158,22 @@ const Login = () => {
                   </CForm>
                 </CCardBody>
               </CCard>
-              <CCard className="text-white bg-primary py-5" style={{ width: '44%' }}>
-                <CCardBody className="text-center">
-                  <div>
-                    <h2>还没有账户？</h2>
-                    <p>若您在本站还没有账户，请点击下方按钮进行注册！</p>
-                    <Link to="/register">
-                      <CButton color="primary" className="mt-3" active tabIndex={-1}>
-                        注册
-                      </CButton>
-                    </Link>
-                  </div>
+              <CCard className="text-white bg-primary py-4" style={{ width: '44%' }}>
+                <CCardBody
+                  className="text-center"
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                  }}
+                >
+                  <h2>还没有账户？</h2>
+                  <p>若您在本站还没有账户，请点击下方按钮进行注册！</p>
+                  <Link to="/register" style={{ marginTop: 'auto' }}>
+                    <CButton color="primary" className="mt-3 px-4" active tabIndex={-1}>
+                      注册
+                    </CButton>
+                  </Link>
                 </CCardBody>
               </CCard>
             </CCardGroup>

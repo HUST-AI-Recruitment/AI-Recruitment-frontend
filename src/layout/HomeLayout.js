@@ -21,14 +21,14 @@ const HomeLayout = () => {
               href="#/login"
               style={{ marginRight: '50px', padding: '12px 20px', fontSize: '1.2rem' }}
             >
-              Login
+              登录
             </CButton>
             <CButton
               color="dark"
               href="#/register"
               style={{ padding: '12px 20px', fontSize: '1.2rem' }}
             >
-              Register
+              注册
             </CButton>
           </CCardBody>
         </CCard>
