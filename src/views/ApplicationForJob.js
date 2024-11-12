@@ -1,7 +1,7 @@
 import { CButton, CCol, CRow, CSpinner } from '@coreui/react'
 import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import ApplicationCard from 'src/components/ApplicationCard'
 
 const ApplicationForJob = () => {
@@ -11,6 +11,16 @@ const ApplicationForJob = () => {
   const [applications, setApplications] = React.useState([])
   const token = useSelector((state) => state.authReducer.token)
   const [loading, setLoading] = React.useState(false)
+  const role = useSelector((state) => state.authReducer.role)
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (role !== 1) {
+      alert('只有 HR 可以查看此页面')
+      navigate('/all-jobs')
+    }
+  }, [role, navigate])
+
   console.log('jobID', jobID)
   useEffect(() => {
     const fetchData = async () => {
