@@ -268,7 +268,7 @@ const Resume = () => {
             value={name}
             onChange={(e) => setName(e.target.value)}
             disabled={disabled}
-            style={{ backgroundColor: 'white' }}
+            // style={{ backgroundColor: 'white' }}
             required
           />
         </CCol>
@@ -283,7 +283,7 @@ const Resume = () => {
               e.target.blur()
             }}
             disabled={disabled}
-            style={{ backgroundColor: 'white' }}
+            // style={{ backgroundColor: 'white' }}
             required
           >
             <option value="">请选择性别</option>
@@ -299,7 +299,7 @@ const Resume = () => {
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
             disabled={disabled}
-            style={{ backgroundColor: 'white' }}
+            // style={{ backgroundColor: 'white' }}
             required
           />
         </CCol>
@@ -311,7 +311,7 @@ const Resume = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             disabled={disabled}
-            style={{ backgroundColor: 'white' }}
+            // style={{ backgroundColor: 'white' }}
             required
           />
         </CCol>
@@ -323,7 +323,7 @@ const Resume = () => {
             value={wechat}
             onChange={(e) => setWechat(e.target.value)}
             disabled={disabled}
-            style={{ backgroundColor: 'white' }}
+            // style={{ backgroundColor: 'white' }}
             required
           />
         </CCol>
@@ -338,7 +338,7 @@ const Resume = () => {
               e.target.blur()
             }}
             disabled={disabled}
-            style={{ backgroundColor: 'white' }}
+            // style={{ backgroundColor: 'white' }}
             required
           >
             <option value="">请选择求职状态</option>
@@ -353,7 +353,7 @@ const Resume = () => {
             feedbackInvalid="请添加备注"
             type="text"
             label="其他"
-            style={{ height: '6em', backgroundColor: 'white' }}
+            style={{ height: '6em' }}
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             disabled={disabled}
