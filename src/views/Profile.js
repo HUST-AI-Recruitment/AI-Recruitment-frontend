@@ -126,13 +126,13 @@ const Profile = () => {
         </CCol>
         <CCol md={6} className="mb-3">
           <CFormInput
-            feedbackInvalid="年龄应为 0-150 之间的整数"
+            feedbackInvalid="年龄应为 16~150 之间的整数"
             type="number"
             inputMode="numeric"
             label="年龄"
             value={age}
             onChange={(e) => setAge(parseInt(e.target.value))}
-            min={0}
+            min={16}
             max={150}
             required
             disabled={id !== userid}

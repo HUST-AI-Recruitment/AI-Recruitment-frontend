@@ -26,7 +26,7 @@ const Register = () => {
   const [password, setPassword] = React.useState('')
   const [repeatPassword, setRepeatPassword] = React.useState('')
   const [role, setRole] = React.useState(0)
-  const [age, setAge] = React.useState(0)
+  const [age, setAge] = React.useState('')
   const [degree, setDegree] = React.useState(0)
   const [errorMessages, setErrorMessages] = useState(null)
   const [visible, setVisible] = useState(false)
@@ -37,10 +37,23 @@ const Register = () => {
 
   const handleRegister = async (event) => {
     event.preventDefault()
-    const form = event.currentTarget
-    if (form.checkValidity() === false) {
+    if (
+      username.length < 2 ||
+      username.length > 255 ||
+      !testEmail.test(email) ||
+      password.length < 6 ||
+      password.length > 255 ||
+      repeatPassword.length < 6 ||
+      repeatPassword.length > 255 ||
+      repeatPassword !== password ||
+      role === 0 ||
+      age < 16 ||
+      age > 150 ||
+      age === '' ||
+      degree === 0
+    ) {
       event.stopPropagation()
-      setErrorMessages('请填写所有必填项')
+      setErrorMessages('请按照要求填写信息')
       // setValidated(true)
       setTimeout(() => {
         setErrorMessages(null)
@@ -48,6 +61,7 @@ const Register = () => {
       return
     }
     if (password !== repeatPassword) {
+      event.stopPropagation()
       setErrorMessages('两次密码不一致')
       setTimeout(() => {
         setErrorMessages(null)
@@ -100,7 +114,7 @@ const Register = () => {
     if (numericValue || numericValue === 0) {
       value = Math.max(0, numericValue)
     } else {
-      value = 0
+      value = ''
     }
     console.log('value', value)
     setAge(value)
@@ -176,16 +190,16 @@ const Register = () => {
                       <CIcon icon={cilUser} />
                     </CInputGroupText>
                     <CFormInput
-                      feedbackInvalid="年龄大小应为 0-150 之间的整数"
+                      feedbackInvalid="年龄大小应为 16~150 之间的整数"
                       placeholder="年龄"
                       onChange={handleAgeChange}
                       inputMode="numeric"
                       type="text"
-                      min={0}
+                      min={16}
                       max={150}
                       value={age}
-                      invalid={age < 0 || age > 150}
-                      valid={age >= 0 && age <= 150}
+                      invalid={age < 16 || age > 150 || age === ''}
+                      valid={age >= 16 && age <= 150 && age !== ''}
                       required
                     />
                   </CInputGroup>
