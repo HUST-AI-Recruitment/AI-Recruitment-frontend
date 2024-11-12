@@ -27,12 +27,13 @@ const Register = () => {
   const [repeatPassword, setRepeatPassword] = React.useState('')
   const [role, setRole] = React.useState(0)
   const [age, setAge] = React.useState(0)
-  const [degree, setDegree] = React.useState('')
+  const [degree, setDegree] = React.useState(0)
   const [errorMessages, setErrorMessages] = useState(null)
   const [visible, setVisible] = useState(false)
   const baseUrl = 'https://api.recruitment.kkkstra.cn/api/v1/user'
   const countdown = 3000
-  const [validated, setValidated] = React.useState(false)
+  // const [validated, setValidated] = React.useState(false)
+  const testEmail = /^[ ]*([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})[ ]*$/i
 
   const handleRegister = async (event) => {
     event.preventDefault()
@@ -40,7 +41,7 @@ const Register = () => {
     if (form.checkValidity() === false) {
       event.stopPropagation()
       setErrorMessages('请填写所有必填项')
-      setValidated(true)
+      // setValidated(true)
       setTimeout(() => {
         setErrorMessages(null)
       }, countdown)
@@ -94,12 +95,14 @@ const Register = () => {
   const handleAgeChange = (e) => {
     const inputValue = e.target.value
     const numericValue = parseInt(inputValue.replace(/\D/g, ''))
+    console.log('numericValue', numericValue)
     let value = null
-    if (numericValue) {
-      value = Math.max(1, numericValue)
+    if (numericValue || numericValue === 0) {
+      value = Math.max(0, numericValue)
     } else {
-      value = ''
+      value = 0
     }
+    console.log('value', value)
     setAge(value)
     e.target.value = value
   }
@@ -114,7 +117,7 @@ const Register = () => {
           <CCol md={9} lg={7} xl={6}>
             <CCard className="mx-4">
               <CCardBody className="p-4">
-                <CForm onSubmit={handleRegister} noValidate validated={validated}>
+                <CForm onSubmit={handleRegister} noValidate>
                   <h1>注册</h1>
                   <p className="text-body-secondary">创建您的账户</p>
                   <div
@@ -134,6 +137,8 @@ const Register = () => {
                       style={{ flex: 1 }}
                       checked={role === 1}
                       onChange={(e) => setRole(parseInt(e.target.value))}
+                      invalid={role === 0}
+                      valid={role !== 0}
                       required
                     />
                     <CFormCheck
@@ -145,6 +150,8 @@ const Register = () => {
                       style={{ flex: 1 }}
                       checked={role === 2}
                       onChange={(e) => setRole(parseInt(e.target.value))}
+                      invalid={role === 0}
+                      valid={role !== 0}
                       required
                     />
                   </div>
@@ -159,6 +166,8 @@ const Register = () => {
                       onChange={(e) => setUsername(e.target.value)}
                       minLength={2}
                       maxLength={255}
+                      valid={username.length >= 2 && username.length <= 255}
+                      invalid={username.length < 2 || username.length > 255}
                       required
                     />
                   </CInputGroup>
@@ -171,9 +180,12 @@ const Register = () => {
                       placeholder="年龄"
                       onChange={handleAgeChange}
                       inputMode="numeric"
-                      type="number"
+                      type="text"
                       min={0}
                       max={150}
+                      value={age}
+                      invalid={age < 0 || age > 150}
+                      valid={age >= 0 && age <= 150}
                       required
                     />
                   </CInputGroup>
@@ -184,6 +196,8 @@ const Register = () => {
                     <CFormSelect
                       feedbackInvalid="请选择教育情况"
                       onChange={(e) => setDegree(e.target.value ? parseInt(e.target.value) : 0)}
+                      invalid={degree === 0}
+                      valid={degree !== 0}
                       required
                     >
                       <option value="">教育情况</option>
@@ -200,6 +214,7 @@ const Register = () => {
                       onChange={(e) => setEmail(e.target.value)}
                       required
                       maxLength={255}
+                      invalid={!testEmail.test(email)}
                       type="email"
                     />
                   </CInputGroup>
@@ -215,6 +230,8 @@ const Register = () => {
                       onChange={(e) => setPassword(e.target.value)}
                       minLength={6}
                       maxLength={255}
+                      invalid={password.length < 6 || password.length > 255}
+                      valid={password.length >= 6 && password.length <= 255}
                       required
                     />
                   </CInputGroup>
@@ -230,11 +247,21 @@ const Register = () => {
                       onChange={(e) => setRepeatPassword(e.target.value)}
                       minLength={6}
                       maxLength={255}
+                      invalid={
+                        repeatPassword.length < 6 ||
+                        repeatPassword.length > 255 ||
+                        repeatPassword !== password
+                      }
+                      valid={
+                        repeatPassword.length >= 6 &&
+                        repeatPassword.length <= 255 &&
+                        repeatPassword === password
+                      }
                       required
                     />
                   </CInputGroup>
                   <div className="d-grid">
-                    <CButton color="success" type="submit">
+                    <CButton color="success" type="submit" className="text-white">
                       创建
                     </CButton>
                   </div>
