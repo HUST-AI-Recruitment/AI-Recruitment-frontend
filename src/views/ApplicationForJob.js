@@ -30,11 +30,16 @@ const ApplicationForJob = () => {
           Authorization: 'Bearer ' + token,
         },
       })
+      const data = await response.json()
       if (!response.ok) {
+        if (data['msg'] === 'permission denied') alert('只有工作发布者本人可以查看此页面')
+        else if (data['msg'] === 'database error') alert('数据库错误')
+        else if (data['msg'] === 'invalid job_id') alert('无效的工作 ID')
+        else if (data['msg'] === 'job does not exist') alert('工作不存在')
+        else alert('获取申请列表失败')
         console.log('get applications failed')
         return
       }
-      const data = await response.json()
       setApplications(data['data']['applications'] || [])
     }
     fetchData()
@@ -54,6 +59,22 @@ const ApplicationForJob = () => {
       return
     }
     const data = await response.json()
+    if (!response.ok) {
+      if (data['msg'] === 'permission denied') alert('只有工作发布者本人可以查看此页面')
+      else if (data['msg'] === 'database error') alert('数据库错误')
+      else if (data['msg'] === 'get job failed') alert('获取工作信息失败')
+      else if (data['msg'] === 'get resume list failed') alert('获取简历信息失败')
+      else if (data['msg'] === 'get resume education list failed') alert('获取教育经历失败')
+      else if (data['msg'] === 'get resume experience list failed') alert('获取工作经历失败')
+      else if (data['msg'] === 'get resume project list failed') alert('获取项目经历失败')
+      else if (data['msg'] === 'json marshal failed') alert('JSON 序列化失败')
+      else if (data['msg'] === 'json unmarshal failed') alert('JSON 反序列化失败')
+      else if (data['msg'] === 'create request failed') alert('创建请求失败')
+      else if (data['msg'] === 'send request failed') alert('发送请求失败')
+      else if (data['msg'] === 'read response body failed') alert('读取响应失败')
+      else alert('获取 AI 评分失败')
+      return
+    }
     const scores = data['data']['score'] || []
     console.log('score', scores)
     setApplications(

@@ -65,6 +65,10 @@ const Login = () => {
         dispatch(setAuthData(auth))
         navigate(`/user/${auth['userid']}`)
       } else {
+        if (data['msg'] === 'invalid params') alert('请填写正确的用户名和密码')
+        else if (data['msg'] === 'get user failed') alert('用户名不存在')
+        else if (data['msg'] === 'password incorrect') alert('密码错误')
+        else alert('登录失败')
         console.error(data.message)
       }
     } catch (error) {

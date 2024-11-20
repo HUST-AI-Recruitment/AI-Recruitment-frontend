@@ -38,11 +38,14 @@ const useJob = (id) => {
           Authorization: 'Bearer ' + token,
         },
       })
+      const data = await response.json()
       if (!response.ok) {
+        if (data['msg'] === 'invalid id') alert('无效的工作 ID')
+        else if (data['msg'] === 'get job failed') alert('获取工作信息失败')
+        else alert('获取工作信息失败')
         console.log('获取工作信息失败')
         return
       }
-      const data = await response.json()
       setJob(data['data']['job'])
     }
     fetchData()
@@ -90,6 +93,16 @@ const JobDetail = () => {
     if (response.ok) {
       alert('成功删除工作')
       navigate('/all-jobs')
+    } else {
+      const data = await response.json()
+      console.log(data)
+      if (data['msg'] === 'invalid id') alert('无效的工作 ID')
+      else if (data['msg'] === 'delete job failed') alert('删除工作失败')
+      else if (data['msg'] === 'permission denied') alert('只有发布者本人可以删除工作')
+      else if (data['msg'] === 'get job failed') alert('获取工作信息失败')
+      else if (data['msg'] === 'delete job related applications failed')
+        alert('删除该工作相关申请失败')
+      else alert('删除工作失败')
     }
   }
 
@@ -117,7 +130,12 @@ const JobDetail = () => {
         navigate(`/resume/${userid}`)
       } else if (data['msg'] === 'application already exists') {
         alert('您已经申请过该工作了')
-      }
+      } else if (data['msg'] === 'database error') alert('数据库错误')
+      else if (data['msg'] === 'permission denied') alert('只有求职者可以申请工作')
+      else if (data['msg'] === 'create application failed') alert('工作申请失败')
+      else if (data['msg'] === 'invalid params') alert('无效的参数')
+      else if (data['msg'] === 'job does not exist') alert('工作不存在')
+      else alert('工作申请失败')
     }
   }
 

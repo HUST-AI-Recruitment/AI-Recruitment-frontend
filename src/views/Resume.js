@@ -62,12 +62,13 @@ const Resume = () => {
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(getUrl, {
+        method: 'GET',
         headers: {
           Authorization: 'Bearer ' + token,
         },
       })
+      const data = await response.json()
       if (response.ok) {
-        const data = await response.json()
         const resume = data['data']['resume']
         console.log('data', data)
         console.log('resume', resume)
@@ -82,6 +83,13 @@ const Resume = () => {
         setExperiences(resume.experience || [])
         setProjects(resume.project || [])
         setIsGet(true)
+      } else {
+        if (data['msg'] === 'invalid user id') alert('无效的用户 ID')
+        else if (data['msg'] === 'get resume list failed') alert('获取简历信息失败')
+        else if (data['msg'] === 'get resume education list failed') alert('获取教育经历失败')
+        else if (data['msg'] === 'get resume experience list failed') alert('获取工作经历失败')
+        else if (data['msg'] === 'get resume project list failed') alert('获取项目经历失败')
+        else alert('获取简历信息失败')
       }
     }
     fetchData()
@@ -131,10 +139,21 @@ const Resume = () => {
       },
       body: JSON.stringify(data),
     })
+    const res = await response.json()
     if (response.ok) {
-      isGet ? alert('简历创建成功') : alert('简历更新成功')
+      isGet ? alert('简历更新成功') : alert('简历创建成功')
     } else {
-      isGet ? alert('简历创建失败') : alert('简历更新失败')
+      if (isGet) {
+        if (res['msg'] === 'permission denied') alert('只有求职者可以更新简历')
+        else if (res['msg'] === 'invalid params') alert('填写的简历信息无效')
+        else if (res['msg'] === 'update resume failed') alert('更新简历失败')
+        else alert('简历更新失败')
+      } else {
+        if (res['msg'] === 'permission denied') alert('只有求职者可以创建简历')
+        else if (res['msg'] === 'invalid params') alert('填写的简历信息无效')
+        else if (res['msg'] === 'create resume failed') alert('创建简历失败')
+        else alert('简历创建失败')
+      }
     }
   }
 

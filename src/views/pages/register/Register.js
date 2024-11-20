@@ -86,7 +86,9 @@ const Register = () => {
         alert('注册成功')
         navigate('/login')
       } else {
-        alert('注册失败')
+        const data = await response.json()
+        if (data['msg'] === 'invalid params') alert('信息填写不正确')
+        else alert('注册失败')
       }
     } catch (error) {
       console.error(error)

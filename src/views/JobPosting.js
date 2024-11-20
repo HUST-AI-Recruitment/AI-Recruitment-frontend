@@ -82,7 +82,11 @@ const JobPosting = () => {
       setSalary('')
       setJobType('')
     } else {
-      alert('工作发布失败')
+      const data = await response.json()
+      if (data['msg'] === 'permission denied') alert('只有招聘者可以发布工作')
+      else if (data['msg'] === 'create job failed') alert('工作发布失败')
+      else if (data['msg'] === 'invalid params') alert('填写的信息无效')
+      else alert('工作发布失败')
     }
   }
 
@@ -109,6 +113,14 @@ const JobPosting = () => {
       const id = jobID
       dispatch(clearJob())
       navigate(`/job/${id}`)
+    } else {
+      const data = await response.json()
+      if (data['msg'] === 'permission denied') alert('只有发布者本人可以修改工作信息')
+      else if (data['msg'] === 'invalid params') alert('填写的信息无效')
+      else if (data['msg'] === 'invalid id') alert('无效的工作 ID')
+      else if (data['msg'] === 'get job failed') alert('获取工作信息失败')
+      else if (data['msg'] === 'update job failed') alert('更新工作信息失败')
+      else alert('工作更新失败')
     }
   }
 

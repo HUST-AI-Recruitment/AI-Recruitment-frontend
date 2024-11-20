@@ -26,11 +26,14 @@ const MyApplication = () => {
           Authorization: 'Bearer ' + token,
         },
       })
+      const data = await response.json()
       if (!response.ok) {
+        if (data['msg'] === 'permission denied') alert('只有应聘者可以查看此页面')
+        else if (data['msg'] === 'database error') alert('数据库错误')
+        else alert('获取申请列表失败')
         console.log('get applications failed')
         return
       }
-      const data = await response.json()
       setMyApplications(data['data']['applications'] || [])
     }
     fetchData()

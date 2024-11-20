@@ -38,6 +38,12 @@ const Profile = () => {
         },
       })
       const data = await response.json()
+      if (!response.ok) {
+        if (data['msg'] === 'invalid id') alert('无效的用户 ID')
+        else if (data['msg'] === 'get user failed') alert('获取用户信息失败')
+        else alert('获取信息失败')
+        return
+      }
       const profile = data['data']['profile']
       setName(profile.username)
       if (id === userid) {
@@ -76,6 +82,11 @@ const Profile = () => {
     if (response.ok) {
       alert('信息更新成功')
     } else {
+      const data = await response.json()
+      if (data['msg'] === 'invalid id') alert('无效的用户 ID')
+      else if (data['msg'] === 'forbidden') alert('无权修改他人信息')
+      else if (data['msg'] === 'invalid params') alert('更新的信息无效')
+      else if (data['msg'] === 'update user failed') alert('更新用户信息失败')
       alert('信息更新失败')
     }
   }

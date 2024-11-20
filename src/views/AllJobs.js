@@ -43,11 +43,14 @@ const AllJobs = () => {
           Authorization: 'Bearer ' + token,
         },
       })
+      const data = await response.json()
       if (!response.ok) {
+        if (data['msg'] === 'permission denied') alert('只有招聘者可以选择“只看我创建的”选项')
+        else if (data['msg'] === 'get all jobs failed') alert('获取工作列表失败')
+        else alert('获取工作列表失败')
         console.log('get all jobs failed')
         return
       }
-      const data = await response.json()
       setAllJobs(data['data']['jobs'] || [])
       setJobs(data['data']['jobs'] || [])
     }
@@ -76,7 +79,18 @@ const AllJobs = () => {
       if (data['msg'] === 'get resume list failed') {
         alert('请先填写简历')
         navigate(`/resume/${userid}`)
-      }
+      } else if (data['msg'] === 'get resume education list failed') alert('获取教育经历失败')
+      else if (data['msg'] === 'get resume experience list failed') alert('获取工作经历失败')
+      else if (data['msg'] === 'get resume project list failed') alert('获取项目经历失败')
+      else if (data['msg'] === 'get all jobs failed') alert('获取工作列表失败')
+      else if (data['msg'] === 'json marshal failed') alert('JSON 序列化失败')
+      else if (data['msg'] === 'json unmarshal failed') alert('JSON 反序列化失败')
+      else if (data['msg'] === 'create request failed') alert('创建请求失败')
+      else if (data['msg'] === 'send request failed') alert('发送请求失败')
+      else if (data['msg'] === 'read response body failed') alert('读取响应失败')
+      else if (data['msg'] === 'invalid param') alert('参数无效')
+      else if (data['msg'] === 'permission denied') alert('只有求职者可以选择 AI 推荐')
+      else alert('获取 AI 推荐失败')
       return
     } else {
       const jobIds = data['data']['jobs'] || []

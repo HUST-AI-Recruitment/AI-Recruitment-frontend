@@ -38,6 +38,8 @@
     ```
     应用程序将在本地运行，地址默认为 http://localhost:3000 。
     
-## 许可证
+## 授权
 
 该项目遵循 MIT 许可证。
+
+该项目从 [coreui-free-react-admin-template-cra](https://github.com/coreui/coreui-free-react-admin-template-cra) 基础上修改而来，依据 [MIT 许可证](https://github.com/coreui/coreui-free-react-admin-template-cra/blob/main/LICENSE) 获得授权。

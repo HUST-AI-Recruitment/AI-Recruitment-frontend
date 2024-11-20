@@ -117,7 +117,14 @@ const ApplicationCard = ({ application }) => {
         accepted: accepted,
       }),
     })
+    const data = await response.json()
     if (!response.ok) {
+      if (data['msg'] === 'invalid params') alert('无效的参数')
+      else if (data['msg'] === 'permission denied') alert('操作被拒绝')
+      else if (data['msg'] === 'database error') alert('数据库错误')
+      else if (data['msg'] === 'application does not exist') alert('申请不存在')
+      else if (data['msg'] === 'invalid progress') alert('进度无效')
+      else alert('操作失败')
       console.log('failed')
       return
     }
