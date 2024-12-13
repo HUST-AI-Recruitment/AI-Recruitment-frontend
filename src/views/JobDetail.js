@@ -48,8 +48,8 @@ const useJob = (id) => {
       }
       setJob(data['data']['job'])
     }
-    fetchData()
-  }, [getUrl, token])
+    if (id) fetchData()
+  }, [getUrl, token, id])
 
   return job
 }

@@ -71,9 +71,7 @@ const AppHeader = () => {
 
   const handleToggleSidebar = () => {
     dispatch({ type: 'setSidebarShow', sidebarShow: !sidebarShow })
-    if (sidebarUnfoldable) {
-      dispatch({ type: 'setSidebarUnfoldable', sidebarUnfoldable: false })
-    }
+    dispatch({ type: 'setSidebarUnfoldable', sidebarUnfoldable: false })
   }
 
   return (

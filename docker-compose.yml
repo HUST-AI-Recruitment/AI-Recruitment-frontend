@@ -1,7 +1,7 @@
 version: '3'
 services:
   app:
-    image: registry.cn-hangzhou.aliyuncs.com/kkkstra/ai-recruit-frontend:v3.1.5
+    image: registry.cn-hangzhou.aliyuncs.com/kkkstra/ai-recruit-frontend:v3.1.6
     ports:
       - '3001:80'
     restart: always
